@@ -12,12 +12,14 @@ body{
 }
 
 :root {
-    --primary: #2BD4A6;
-    --dark: #233329;
-    --secondary: #63d471;
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
     --secondaryDark: #63a46c;
-    --tercyary: #6a7152;
-    --glass: rgba(255,255,255, 0.7);
+    --tercyary: #BF4342;
+    --caramel: #E7D7C1;
+    --glass: rgba(255,255,255, 0.4);
     --font: 'Fredoka One', cursive;
 }
 
@@ -26,32 +28,29 @@ body{
     height: 60px;
     border: 2px solid var(--primary);
     border-radius: 17px;
-    color: var(--dark);
-    background-color: var(--tercyary);
+    color: var(--light);
+    background-color: var(--dark);
     font-family: var(--font);
     font-size: 25px;
     transition: all .2s ease-in-out;
     margin-bottom: 20px;
-
+    margin-right: 20px;
 
 }
 
 
 .form-holder{
-    background: linear-gradient(
-        to right bottom,
-        rgba(255, 255, 255, 0.7),
-        rgba(255, 255, 255, 0.3)
-      );
+    
+    align-self: center;
     width: 500px;
-    height: 600px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 50px;
     border-radius: 17px;
-
+    
 }
 
 .inpt{
@@ -108,16 +107,16 @@ input[type="password"]{
     left: 7%;
     font-size: 20px;
     font-family: var(--font);
-    color: var(--dark);
+    color: var(--light);
 }
 
 .input-text-password{
     position: absolute;
-    top:25%;
+    top:0%;
     left: 7%;
     font-size: 20px;
     font-family: var(--font);
-    color: var(--dark);
+    color: var(--light);
 
 }
 
@@ -136,4 +135,53 @@ input[type="password"]{
 
 .inpt:invalid{
     box-shadow: none;
+}
+
+#wrapper{
+    display: flex;
+    
+}
+
+#left-part{
+    width: 500px;
+    height: 400px;
+    border-right: 1px solid var(--caramel);
+    color: var(--caramel);
+    font-family: var(--font);
+    align-self: center;
+    display:flex;
+    flex-direction: column;
+}
+
+.paw-image{
+    width: 100px;
+    height: 100px;
+    display: inline;
+}
+
+h1,p,h2{
+    font-family: var(--font);
+    color: var(--caramel);
+}
+
+#head-img{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#land-body{
+    display:flex;
+    flex-direction: column;
+    align-self: center;
+    
+}
+
+.head{
+    margin-bottom: 50px;
+}
+
+#buttons-wrapper{
+    display:flex;
+    justify-content: flex-start;
 }
