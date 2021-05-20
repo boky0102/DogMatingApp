@@ -28,8 +28,8 @@
                     
                 </div>
                 <div id="divide"></div>
-                <div class="form-holder">
-                        <form>
+                <div id="login-form">
+                        <form method="POST" action="/home">
                             
                                 <div id="form-header">
                                     <h1 class="head">Login</h1>
@@ -47,15 +47,51 @@
                                 
                                 <div id="buttons-wrapper">
                                     <button class="btn" type="submit"> LOGIN</button>
-                                    <button class="btn" type="submit"> REGISTER </button>
+                                    <button class="btn" onclick="handleRegClick()"> REGISTER </button>
                                 </div>
                             
                         </form>
+                </div>
+                <div id="register-form">
+                    <form method="POST">
+                        
+                            <div id="form-header">
+                                    <img onclick="handleRegBackClick()" src="../static/images/back.svg" class="back-btn" />
+
+                                    <h1 class="head" id="head-reg">Register</h1>
+                                   
+                            </div>
+                            <div class="input-box">
+                                <input id="form-usr" name="username" oninput="handlePasswordValue()" type="text" class="inpt inptA" required/>
+                                <p class="input-text-username">Username</p>
+                            </div>
+                
+                            <div class="input-box">
+                                <input id="first-pass" oninput="handlePasswordValue()" name="password" type="password" class="inpt inptB" required/>
+                                <p class="input-text-password">Password</p>
+                
+                            </div>
+
+                            <div class="input-box">
+                                <input id="second-pass" oninput="handlePasswordValue()" type="password" class="inpt inptB" required/>
+                                <p class="input-text-password">Confirm password</p>
+                
+                            </div>
+
+                            <div id="password-alert">
+                                <p id="alert-text"></p>
+                            </div>
+                            
+                            <div id="buttons-wrapper">
+                                <button  class="btn" id="reg-btn" type="submit"> REGISTER </button>
+                            </div>
+                        
+                    </form>
                 </div>
             </div>
 
         </div>
         
-        
+    <script src="{{url_for('static', filename='scripts/main.js')}}"></script>
     </body>
 </html>

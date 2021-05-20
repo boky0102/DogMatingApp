@@ -39,7 +39,7 @@ body{
 }
 
 
-.form-holder{
+#register-form, #login-form{
     
     align-self: center;
     width: 500px;
@@ -51,6 +51,10 @@ body{
     margin: 50px;
     border-radius: 17px;
     
+}
+
+#register-form{
+    display: none;
 }
 
 .inpt{
@@ -139,7 +143,7 @@ input[type="password"]{
 
 #wrapper{
     display: flex;
-    
+    position: relative;
 }
 
 #left-part{
@@ -184,4 +188,33 @@ h1,p,h2{
 #buttons-wrapper{
     display:flex;
     justify-content: flex-start;
+}
+
+.back-btn{
+    width: 50px;
+    height: 50px;
+    margin-bottom: 25px;
+}
+
+#form-header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#head-reg{
+    margin-left: 20px;
+}
+
+.back-btn:hover{
+    scale: 1.1;
+    cursor: pointer;
+}
+
+#password-alert{
+    display: none;
+}
+
+#reg-btn:disabled{
+    cursor: not-allowed;
 }
