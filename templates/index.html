@@ -29,18 +29,18 @@
                 </div>
                 <div id="divide"></div>
                 <div id="login-form">
-                        <form method="POST" action="/home">
+                        <form method="POST" action="/auth">
                             
                                 <div id="form-header">
                                     <h1 class="head">Login</h1>
                                 </div>
                                 <div class="input-box">
-                                    <input type="text" class="inpt inptA" required/>
+                                    <input name="usernameLogin" type="text" class="inpt inptA" required/>
                                     <p class="input-text-username">Username</p>
                                 </div>
                     
                                 <div class="input-box">
-                                    <input type="password" class="inpt inptB" required/>
+                                    <input name="passwordLogin" type="password" class="inpt inptB" required/>
                                     <p class="input-text-password">Password</p>
                     
                                 </div>
@@ -49,6 +49,15 @@
                                     <button class="btn" type="submit"> LOGIN</button>
                                     <button class="btn" onclick="handleRegClick()"> REGISTER </button>
                                 </div>
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                <div>
+                                    <p>
+                                    {{ messages[0] }}
+                                    </p>
+                                </div>
+                                {% endif %}
+                                {% endwith %}
                             
                         </form>
                 </div>
@@ -85,7 +94,16 @@
                             <div id="buttons-wrapper">
                                 <button  class="btn" id="reg-btn" type="submit"> REGISTER </button>
                             </div>
-                        
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <div>
+                                    <p>
+                                    {{ messages[0] }}
+                                    </p>
+                                </div>
+                            {% endif %}
+                            {% endwith %}
+                            
                     </form>
                 </div>
             </div>
