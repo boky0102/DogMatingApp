@@ -134,11 +134,18 @@ def homeRoute():
 
 
 @app.route("/add-puppy", methods=['GET', 'POST'])
+@flask_login.login_required
 def userCheck():
-    return 'add-puppy'
+    return render_template('addpuppy.html')
 
 
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
     return redirect("/")
+
+
+@app.route('/profile')
+@flask_login.login_required
+def profile():
+    return render_template("profile.html")

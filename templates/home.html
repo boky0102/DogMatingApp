@@ -7,16 +7,35 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/addstyle.css') }}">
     </head>
     <body>
-        <div id="sidebar">
-            <a href="/add-puppy">Add puppy</a>
-            <a href="/profile">Profile</a>
-            <a href="/logout"><button>Log out</button></a>
+        <div id="layout-wrapper">
+            <div id="sidebar">
+                <div class="avatar">
+
+                </div>
+                <div id="btn-div">
+                    <a href="/logout"><button id="logOut-btn"><p class="text-in-nav">Log out</p></button></a>
+                </div>
+                <div id="sidebar-items-wrapper">
+                    <a href="/add-puppy" id="{{ 'sidebar-active-elem' if active_page == 'add' else '' }}" class="sidebar-elem"><p class="text-in-nav">Add Puppy</p></a>
+                    <a href="/profile" id="{{ 'sidebar-active-elem' if active_page == 'profile' else '' }}" class="sidebar-elem"><p class="text-in-nav">Profile</p></a>
+                    <a href="/explore" id="{{ 'sidebar-active-elem' if active_page == 'explore' else '' }}" class="sidebar-elem"><p class="text-in-nav">Explore</p></a>
+                
+                    <a href="/profile" class="sidebar-elem"><p class="text-in-nav">My Requests</p></a>
+                    <a href="/profile" class="sidebar-elem"><p class="text-in-nav">Profile</p></a>
+                </div>
+                
+            </div>
+            <div id="main-div">
+
+                {% block content %}{% endblock %}
+            </div>
         </div>
         
-        <script src=""></script>
     </body>
 </html>

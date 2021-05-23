@@ -1,0 +1,116 @@
+:root {
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
+    --glass: rgba(255,255,255, 0.4);
+    --font: 'Fredoka One', cursive;
+    --marginLarge: 6px;
+}
+
+.wrap{
+    display: flex;
+    flex-direction: row;
+    width: inherit;
+    height: 95%;
+    justify-content: space-around;
+
+}
+
+.add-form-wrap{
+    justify-content: center;
+    align-self: center;
+    border-radius: 20px;
+    /* border: 2px solid var(--light);
+    background-color: var(--primary); */
+    display:flex;
+    flex-direction: column;
+    
+}
+
+.input-form{
+    background-color: var(--glass);
+    border-radius: 11px;
+    /* border: 1px solid var(--primary); */
+    border-style: none;
+    width: 500px;
+    height: 55px;
+    outline: none;
+    font-size: 20px;
+    font-family: var(--font);
+    transition: background-color 0.3s ease-in-out;
+    color: var(--dark);
+    padding: 10px;
+}
+
+.form-label{
+    color: var(--light)
+}
+
+.textarea{
+    width: 500px;
+    height: 200px;
+    padding: 10px;
+}
+
+.btn-sec{
+    background-color: #8C1C13;
+    font-size: 20px;
+    display: block;
+    margin-top: 20px;
+}
+
+#image-upload-wrap{
+    width: 300px;
+    height: 300px;
+    border: 1px solid var(--primary);
+    border-radius: 15px;
+    align-self: center;
+    background-color: var(--primary);
+    position: relative;
+}
+
+#actual-btn{
+    display: none;
+}
+
+.form-style{
+    width: 100%;
+    height: 100%;
+}
+
+#upload-btn{
+    width: 140px;
+    height: 35px;
+    border: 2px solid var(--primary);
+    border-radius: 17px;
+    color: var(--light);
+    background-color: var(--dark);
+    font-family: var(--font);
+    font-size: 25px;
+    transition: all .2s ease-in-out;
+    padding: 5px;
+    text-align: center;
+    text-justify: center;
+    position: absolute;
+    top: -5%;
+    left: 5%;
+    
+}
+
+#upload-btn:hover{
+    scale: 1.1;
+}
+
+#upload-header{
+    color: var(--light);
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+
+#right-part{
+    align-self: center;
+}
+

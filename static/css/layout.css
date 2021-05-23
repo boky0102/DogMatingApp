@@ -1,4 +1,141 @@
+:root {
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
+    --glass: rgba(255,255,255, 0.4);
+    --font: 'Fredoka One', cursive;
+}
+
+a{
+    text-decoration: none;
+    color: var(--dark);
+    font-family: var(--font);
+}
+
+body{
+    background-color: var(--dark);
+    width: 100%;
+    height: 100vh;
+}
+
+p{
+    color: var(--dark)
+}
+
+#main-div{
+    display: flex;
+    justify-content: flex-start;
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+
 #sidebar{
     width: 20%;
     height: 100vh;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    box-shadow: 20px var(--light);
+    position: sticky;
+    top:0;
+    overflow-y: hidden;
+}
+
+.avatar{
+    align-self: center;
+    margin-top: 50px;
+    background-color: var(--light);
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.sidebar-elem{
+    align-self: center;
+    height: 50px;
+    width: 98%;
+    /* background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.1)
+      ); */
+    border: 2px solid var(--light);
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    border-radius: 5px;
+    background-color: var(--secondary);
+
+}
+
+.sidebar-elem:hover{
+    background-color: var(--dark);
+    transition: ease-in-out 0.3s;
+}
+
+#sidebar-active-elem{
+    background-color: var(--dark);
+}
+
+#logOut-btn{
+    background-color: var(--dark);
+    border-style: none;
+    border-radius: 15px;
+}
+
+#btn-div{
+    align-self: center;
+    margin-top: 20px;
+}
+#btn-div:hover{
+    scale: 1.1;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+}
+
+#sidebar-items-wrapper{
+    margin-top: 20px;
+    padding: 10px;
+}
+
+#layout-wrapper{
+    display:flex;
+}
+
+
+.text-in-nav{
+    color: var(--light)
+}
+
+@media screen and (max-width: 1000px){
+    #sidebar{
+        width: 100%;
+        height: 50px;
+        background-color: var(--primary);
+        display: flex;
+        flex-direction: row;
+        text-decoration: none;
+    }
+
+    #layout-wrapper{
+        display:flex;
+        flex-direction: column;
+    }
+
+    .avatar{
+        display: none;
+    }
+
+    .sidebar-elem{
+        display: none;
+    }
+
+    #main-div{
+        overflow-y: unset;
+    }
+    
+
 }

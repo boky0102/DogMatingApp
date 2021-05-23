@@ -1,0 +1,45 @@
+{% extends 'home.html' %}
+{% set active_page = "add" %}
+
+{% block content %}
+    
+        <form class="form-style">ž
+        <div class="wrap">
+            <div class="add-form-wrap">
+                    <p class="form-label">Name</p>
+                    <input class="input-form">
+                    <p class="form-label">Description</p>
+                    <textarea class="input-form textarea" row=5></textarea>
+                    <p class="form-label">Species</p>
+                    <select class="input-form">
+                        <option>Retriver</option>
+                        <option>Haski</option>
+                        <option>Njem ovcar</option>
+                    </select>
+                    <p class="form-label">Date of birth</p>
+                    <input type="date" class="input-form"/>
+                    <button class="btn btn-sec" type="submit">ADD PUPPY</button>
+                
+                
+            </div>
+            <div id="right-part">
+                <p id="upload-header">Picture</p>
+                <div id="image-upload-wrap">
+                    <input
+                                id="actual-btn"
+                                type="file"
+                                accept="image/*"  
+                    />
+                    <label for="actual-btn" id="upload-btn">
+                        Choose
+                    </label>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        </form>
+
+        <script src="{{url_for('static', filename='scripts/upload.js')}}"></script>
+    
+{% endblock %}
