@@ -8,13 +8,18 @@ from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
 import flask_login
 from flask_login import UserMixin
+from datetime import datetime
+from flask import session
+
+
+import os
 
 
 app = Flask(__name__)
 
 # DB congig
 
-db = yaml.load(open('db.yaml'))
+db = yaml.load(open('db.yaml'), Loader=yaml.FullLoader)
 app.config['MYSQL_HOST'] = db['mysql_host']
 app.config['MYSQL_USER'] = db['mysql_user']
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
@@ -23,7 +28,7 @@ mysql = MySQL(app)
 
 # APP SECRET KEY CONFIG
 
-secret = yaml.load(open('appcfg.yaml'))
+secret = yaml.load(open('appcfg.yaml'), Loader=yaml.FullLoader)
 app.secret_key = secret['SECRET_KEY']
 app.config['SESSION_TYPE'] = 'filesystem'
 
@@ -47,17 +52,18 @@ class User(flask_login.UserMixin):
 def user_loader(username):
     cur = mysql.connection.cursor()
     cur.execute(
-        "SELECT username,password FROM user WHERE username = (%s)", (
+        "SELECT UID,username,password FROM user WHERE username = (%s)", (
             username,)
     )
     result = cur.fetchone()
     cur.close()
 
-    if len(result) == 0:
+    if result is None:
         return
     else:
         user = User()
-        user.id = result[0]
+        user.id = result[1]
+        user.uid = result[0]
         return User
 
 # UNAUTHORIZED REDIREC HANDLER
@@ -66,6 +72,23 @@ def user_loader(username):
 @login_manager.unauthorized_handler
 def unathorized_handler():
     return redirect("/")
+
+
+# UPLOAD ABSOLUTE PATH CONFIGURATION
+UPLOAD_FOLDER = "./static/images/uploads"
+app.config['IMAGE_UPLOADS'] = UPLOAD_FOLDER
+app.config['ALLOWED_EXTENSIONS'] = {'PNG', 'JPG', 'JPEG', 'GIF'}
+
+
+def allowed_image(filename):
+    if not "." in filename:
+        return False
+    else:
+        ext = filename.rsplit(".", 1)[1]
+        if ext.upper() in app.config['ALLOWED_EXTENSIONS']:
+            return True
+        else:
+            return False
 
 # LANDING PAGE ROUTE
 
@@ -106,7 +129,7 @@ def isAuth():
 
     cur = mysql.connection.cursor()
     cur.execute(
-        "SELECT username,password FROM user WHERE username=(%s)", (
+        "SELECT username,password,UID FROM user WHERE username=(%s)", (
             username,)
     )
     result = cur.fetchall()
@@ -116,7 +139,9 @@ def isAuth():
         if bcrypt.check_password_hash(pwToCheck, password):
             print(result)
             user = User()
-            user.id = username
+            user.id = result[0][0]
+            session["uid"] = result[0][2]
+            session['username'] = result[0][0]
             flask_login.login_user(user)
             return redirect("/home")
         else:
@@ -135,17 +160,93 @@ def homeRoute():
 
 @app.route("/add-puppy", methods=['GET', 'POST'])
 @flask_login.login_required
-def userCheck():
-    return render_template('addpuppy.html')
+def addPuppy():
+    if request.method == 'GET':
+        return render_template('addpuppy.html')
+    if request.method == 'POST':
+        puppyDetails = request.form
+        puppyname = puppyDetails['name']
+        description = puppyDetails['description']
+        breed = puppyDetails['breed']
+        dateOfBirth = puppyDetails['birthDate']
+        img = request.files['img']
+        imgSrc = "./static/images/noavatar-dog.png"
+
+        if request.files:
+
+            if allowed_image(img.filename):
+                time = datetime.now()
+                dt_string = time.strftime("%d-%m-%Y%H-%M-%S")
+                img.save(os.path.join(
+                    app.config['IMAGE_UPLOADS'], img.filename))
+
+                filename = str(img.filename)
+                extension = filename.split(".")
+                name = dateOfBirth + dt_string
+                extension = str(extension[1])
+
+                source = UPLOAD_FOLDER + "/" + filename
+                renamed = UPLOAD_FOLDER + "/" + name + "." + extension
+                os.rename(source, renamed)
+                imgSrc = renamed
+
+            else:
+                return redirect("/add-puppy")
+        uid = session["uid"]
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "INSERT INTO dog(name,birth_day,species,description,avatar_src,UID) VALUES(%s,%s,%s,%s,%s,%s)", (
+                puppyname, dateOfBirth, breed, description, imgSrc, uid)
+        )
+        mysql.connection.commit()
+        cur.close()
+        return redirect("/home")
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+@flask_login.login_required
+def profile():
+    if request.method == 'GET':
+        username = session['username']
+        return render_template("profile.html", currentUsername=username)
+    if request.method == 'POST':
+        userDetails = request.form
+        username = userDetails['username']
+        streetAndNum = userDetails['streetAndNum']
+        city = userDetails['city']
+        country = userDetails['country']
+        img = request.files['img']
+
+        if request.files:
+
+            if allowed_image(img.filename):
+                time = datetime.now()
+                dt_string = time.strftime("%d-%m-%Y%H-%M-%S")
+                img.save(os.path.join(
+                    app.config['IMAGE_UPLOADS'], img.filename))
+                filename = str(img.filename)
+                extension = filename.split(".")
+                name = username + dt_string
+                extension = str(extension[1])
+                source = UPLOAD_FOLDER + "/" + filename
+                renamed = UPLOAD_FOLDER + "/" + name + "." + extension
+                os.rename(source, renamed)
+                imgSrc = renamed
+            else:
+                return redirect("/add-puppy")
+
+        uid = session['uid']
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "INSERT INTO address(street_and_num, city, country) VALUES(%s,%s,%s)", (
+                streetAndNum, city, country)
+        )
+
+        cur.close()
 
 
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
     return redirect("/")
-
-
-@app.route('/profile')
-@flask_login.login_required
-def profile():
-    return render_template("profile.html")

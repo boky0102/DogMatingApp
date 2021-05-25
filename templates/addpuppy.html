@@ -3,23 +3,22 @@
 
 {% block content %}
     
-        <form class="form-style">ž
+        <form method="POST" class="form-style" enctype="multipart/form-data">
         <div class="wrap">
             <div class="add-form-wrap">
                     <p class="form-label">Name</p>
-                    <input class="input-form">
+                    <input class="input-form" name="name">
                     <p class="form-label">Description</p>
-                    <textarea class="input-form textarea" row=5></textarea>
+                    <textarea class="input-form textarea" name="description" row=5></textarea>
                     <p class="form-label">Species</p>
-                    <select class="input-form">
+                    <select class="input-form" name="breed">
                         <option>Retriver</option>
                         <option>Haski</option>
                         <option>Njem ovcar</option>
                     </select>
                     <p class="form-label">Date of birth</p>
-                    <input type="date" class="input-form"/>
+                    <input type="date" class="input-form" name="birthDate"/>
                     <button class="btn btn-sec" type="submit">ADD PUPPY</button>
-                
                 
             </div>
             <div id="right-part">
@@ -28,7 +27,8 @@
                     <input
                                 id="actual-btn"
                                 type="file"
-                                accept="image/*"  
+                                accept="image/*"
+                                name="img"  
                     />
                     <label for="actual-btn" id="upload-btn">
                         Choose

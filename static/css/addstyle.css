@@ -63,7 +63,7 @@
 #image-upload-wrap{
     width: 300px;
     height: 300px;
-    border: 1px solid var(--primary);
+    border: 2px solid var(--light);
     border-radius: 15px;
     align-self: center;
     background-color: var(--primary);
@@ -82,10 +82,10 @@
 #upload-btn{
     width: 140px;
     height: 35px;
-    border: 2px solid var(--primary);
+    border: 2px solid var(--light);
     border-radius: 17px;
     color: var(--light);
-    background-color: var(--dark);
+    background-color: var(--primary);
     font-family: var(--font);
     font-size: 25px;
     transition: all .2s ease-in-out;
@@ -100,6 +100,7 @@
 
 #upload-btn:hover{
     scale: 1.1;
+    cursor: pointer;
 }
 
 #upload-header{

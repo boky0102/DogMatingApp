@@ -1,5 +1,6 @@
+console.log("radi");
 
-const imgInp = document.getElementById("actual-btn");
+const imgInp = document.getElementById("image-inpt");
 imgInp.onchange = evt => {
     const exists = document.getElementById('preview');
     if(exists !== null){
@@ -7,7 +8,7 @@ imgInp.onchange = evt => {
         }
     const [file] = imgInp.files
     if (file) {
-        const container = document.getElementById('image-upload-wrap')
+        const container = document.getElementById('avatar')
         const preview = document.createElement('img');
         preview.id = "preview";
         preview.src = URL.createObjectURL(file);
@@ -15,8 +16,7 @@ imgInp.onchange = evt => {
         preview.style.width = "100%";
         preview.style.objectFit = "cover";
         /* preview.style.maxWidth = "100%"; */
-        preview.style.borderRadius = "13px";
+        preview.style.borderRadius = "50%";
         container.appendChild(preview);
     }
 }
-    

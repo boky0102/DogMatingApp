@@ -1,0 +1,82 @@
+:root {
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
+    --glass: rgba(255,255,255, 0.4);
+    --font: 'Fredoka One', cursive;
+    --marginLarge: 6px;
+}
+
+#update-profile-wrap{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#update-profile-form{
+    align-self: flex-start;
+
+}
+
+.p-form{
+    color: var(--light);
+    font-family: var(--font);
+}
+
+#avatar{
+    margin-top: 50px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: var(--light);
+    position: relative;
+}
+
+#image-inpt{
+    display: none;
+}
+
+#image-btn{
+    width: 140px;
+    height: 35px;
+    border: 2px solid var(--light);
+    border-radius: 17px;
+    color: var(--light);
+    background-color: var(--primary);
+    font-family: var(--font);
+    font-size: 25px;
+    transition: all .2s ease-in-out;
+    padding: 5px;
+    text-align: center;
+    text-justify: center;
+    position: absolute;
+    top: 90%;
+    left: 12%;
+}
+
+#first-label{
+    margin-top: 70px;
+}
+
+#image-btn:hover{
+    scale: 1.1;
+    cursor: pointer;
+}
+
+#separator{
+    background-color: var(--light);
+    width: 100%;
+    height: 2px;
+    margin: 50px 0;
+    position: relative;
+}
+
+#adress-section-header{
+    position: absolute;
+    background-color: var(--dark);
+    left: 20%;
+    top: -26px;
+    padding: 0 10px;
+}

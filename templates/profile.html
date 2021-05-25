@@ -2,5 +2,43 @@
 {% set active_page = "profile" %}
 
 {% block content %}
-    <p style="color: violet">Ovo je profile page brale</p>
+    <div id="update-profile-wrap">
+        <div id="update-profile-form">
+            <form method="POST" enctype="multipart/form-data">
+                <div id="avatar">
+                    <input
+                                id="image-inpt"
+                                type="file"
+                                accept="image/*"
+                                name="img"  
+                    />
+                    <label for="image-inpt" id="image-btn">
+                            Choose
+                    </label>
+
+                </div>
+                
+
+                <label for="username"><p id="first-label" class="p-form">Username</p></label>
+                <input id="username" class="input-form" name="username" required type="text" value="{{ currentUsername }}"/>
+                <div id="separator">
+                    <p class="p-form" id="adress-section-header">Address info</p>
+                </div>
+                <label for="streetAndNum"><p class="p-form">Street and number</p></label>
+                <input name="streetAndNum" type="text" class="input-form" required>
+                <label for="city"><p class="p-form">City</p></label>
+                <input name="city" type="text" class="input-form" required>
+                <label for="country"><p class="p-form" >Country</p></label>
+                <input name="country" type="text" class="input-form" required>
+                <button type="submit" class="btn btn-sec">SAVE CHANGES</button>
+                
+                
+            </form>
+        </div>
+
+    </div>
+
+    <script src="{{url_for('static', filename='scripts/profile.js')}}"></script>
+
+    
 {% endblock %}
