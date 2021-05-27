@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -10,9 +11,7 @@ import flask_login
 from flask_login import UserMixin
 from datetime import datetime
 from flask import session
-
-
-import os
+from breeds import breeds
 
 
 app = Flask(__name__)
@@ -106,11 +105,12 @@ def landing():
         result = cur.fetchall()
         cur.close()
         if len(result) == 0:
+            defaultAvatar = "./static/images/noavatar-dog.png"
             pw_hash = bcrypt.generate_password_hash(
                 password, 10).decode('utf-8')
             cur2 = mysql.connection.cursor()
             cur2.execute(
-                "INSERT INTO user(username, password) VALUES(%s, %s)", (username, pw_hash))
+                "INSERT INTO user(username, password, img_src) VALUES(%s, %s, %s)", (username, pw_hash, defaultAvatar))
             mysql.connection.commit()
             cur2.close()
             return 'success'
@@ -129,7 +129,7 @@ def isAuth():
 
     cur = mysql.connection.cursor()
     cur.execute(
-        "SELECT username,password,UID FROM user WHERE username=(%s)", (
+        "SELECT username,password,UID,img_src FROM user WHERE username=(%s)", (
             username,)
     )
     result = cur.fetchall()
@@ -142,6 +142,7 @@ def isAuth():
             user.id = result[0][0]
             session["uid"] = result[0][2]
             session['username'] = result[0][0]
+            session['avatSrc'] = result[0][3]
             flask_login.login_user(user)
             return redirect("/home")
         else:
@@ -155,14 +156,14 @@ def isAuth():
 @app.route("/home", methods=['GET'])
 @flask_login.login_required
 def homeRoute():
-    return render_template("home.html")
+    return render_template("home.html", currentAvatar=session['avatSrc'])
 
 
 @app.route("/add-puppy", methods=['GET', 'POST'])
 @flask_login.login_required
 def addPuppy():
     if request.method == 'GET':
-        return render_template('addpuppy.html')
+        return render_template('addpuppy.html', currentAvatar=session['avatSrc'], breedOptions=breeds)
     if request.method == 'POST':
         puppyDetails = request.form
         puppyname = puppyDetails['name']
@@ -208,7 +209,21 @@ def addPuppy():
 def profile():
     if request.method == 'GET':
         username = session['username']
-        return render_template("profile.html", currentUsername=username)
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT user.img_src, address.street_and_num, address.city, address.country FROM user INNER JOIN address ON user.AID = address.AID WHERE user.username = %s", (
+                username,)
+        )
+
+        result = cur.fetchone()
+        cur.close()
+
+        if result is None:
+            return render_template("profile.html", currentUsername=username, currentAvatar="", streetAndNum="", city="", country="")
+        else:
+            return render_template("profile.html", currentUsername=username, currentAvatar=result[0], streetAndNum=result[1], city=result[2], country=result[3])
+
     if request.method == 'POST':
         userDetails = request.form
         username = userDetails['username']
@@ -217,6 +232,9 @@ def profile():
         country = userDetails['country']
         img = request.files['img']
 
+        print(request.form)
+
+        imgSrc = "./static/images/default-avatar.png"
         if request.files:
 
             if allowed_image(img.filename):
@@ -242,8 +260,45 @@ def profile():
             "INSERT INTO address(street_and_num, city, country) VALUES(%s,%s,%s)", (
                 streetAndNum, city, country)
         )
-
+        mysql.connection.commit()
         cur.close()
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT AID FROM address WHERE street_and_num=(%s)", (
+                streetAndNum,)
+        )
+        result = cur.fetchone()
+        cur.close()
+
+        if result is not None:
+            aid = result[0]
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "UPDATE user SET username=(%s), img_src=(%s), AID=(%s) WHERE UID=(%s)", (
+                    username, imgSrc, aid, uid
+                )
+            )
+            mysql.connection.commit()
+            cur.close()
+        session['avatSrc'] = imgSrc
+        flash("Profile info changed successfully")
+        return redirect("/profile")
+
+
+@app.route('/explore', methods=['GET', 'POST'])
+@flask_login.login_required
+def explore():
+    currentUserId = session['uid']
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM dog WHERE UID != %s", (currentUserId,)
+        )
+        result = cur.fetchall()
+        print(result)
+
+        return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result)
 
 
 @app.route('/logout')

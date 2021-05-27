@@ -6,6 +6,7 @@
         <div id="update-profile-form">
             <form method="POST" enctype="multipart/form-data">
                 <div id="avatar">
+                    <img src="{{ currentAvatar }}" id="avat-img"/>
                     <input
                                 id="image-inpt"
                                 type="file"
@@ -25,12 +26,20 @@
                     <p class="p-form" id="adress-section-header">Address info</p>
                 </div>
                 <label for="streetAndNum"><p class="p-form">Street and number</p></label>
-                <input name="streetAndNum" type="text" class="input-form" required>
+                <input name="streetAndNum"  class="input-form" value="{{ streetAndNum }}" required>
                 <label for="city"><p class="p-form">City</p></label>
-                <input name="city" type="text" class="input-form" required>
+                <input name="city"  class="input-form" value="{{ city }}" required>
                 <label for="country"><p class="p-form" >Country</p></label>
-                <input name="country" type="text" class="input-form" required>
+                <input name="country"  class="input-form" value="{{ country }}" required>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <p class="p-form">
+                            {{ messages[0] }}
+                        </p>
+                {% endif %}
+                {% endwith %}
                 <button type="submit" class="btn btn-sec">SAVE CHANGES</button>
+                
                 
                 
             </form>

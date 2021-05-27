@@ -51,6 +51,7 @@ p{
     height: 200px;
     width: 200px;
     border-radius: 50%;
+    border: 2px solid var(--light);
 }
 
 .sidebar-elem{
@@ -108,6 +109,13 @@ p{
 
 .text-in-nav{
     color: var(--light)
+}
+
+.img-avatar{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 @media screen and (max-width: 1000px){

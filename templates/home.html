@@ -12,12 +12,13 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/addstyle.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/explore.css') }}">
     </head>
     <body>
         <div id="layout-wrapper">
             <div id="sidebar">
                 <div class="avatar">
-
+                    <img class="img-avatar" src="{{ currentAvatar }}"/>
                 </div>
                 <div id="btn-div">
                     <a href="/logout"><button id="logOut-btn"><p class="text-in-nav">Log out</p></button></a>

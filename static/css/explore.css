@@ -1,0 +1,132 @@
+:root {
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
+    --glass: rgba(255,255,255, 0.4);
+    --glass2: rgba(255,255,255, 0.3);
+    --font: 'Fredoka One', cursive;
+}
+
+.choose-cat{
+    width: 200px;
+}
+
+#explore-wrap{
+    width: 100%;
+}
+
+.card-wrap{
+    display: flex;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.card{
+    flex-grow: 1;
+    min-width: 25%;
+    max-width: 25%;
+    background-color: var(--primary);
+    height: 500px;
+    margin-top: 30px;
+    border-radius: 15px;
+    position: relative;
+    
+}
+
+
+
+
+
+.card:hover{
+    cursor: pointer;
+    background-color: var(--secondary);
+    transition: all 0.3s ease-in-out;
+}
+
+.card-image-area{
+    width: 100%;
+    height: 60%;
+    background-color: antiquewhite;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+}
+
+.card-image{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card-text-wrapper{
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font);
+    font-size: 19px;
+    height: 40%;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.card-title-area{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.card-description-area{
+    border-top: 2px solid var(--glass);
+    flex: 2;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    width: 90%;
+
+
+}
+
+.card-date-area{
+    border-top: 2px solid var(--glass);
+    flex: 1;
+    width: 90%;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    
+}
+
+.card-p{
+    color: var(--light);
+    align-self: center;
+    justify-self: center;
+}
+
+
+@media screen and (max-width: 1300px){
+    .card{
+        min-width: 40%;
+        max-width: 40%;
+    }
+    .card-wrap{
+        gap: 5px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .card{
+        min-width: 80%;
+        max-width:  100%;
+        margin: 20px 20px;
+    }
+}

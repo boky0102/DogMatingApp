@@ -1,0 +1,44 @@
+{% extends 'home.html' %}
+{% set active_page = "explore" %}
+
+{% block content %}
+
+    <div id="explore-wrap">
+        <label for="categorySelect"><p class="p-form">Filter by breed: </p></label>
+        <select class="input-form choose-cat" name="categorySelect">
+            <option>Any</option>
+            {% for breed in breedOptions %}
+            
+            <option>{{ breed }}</option>
+            
+            {% endfor %}
+        </select>
+
+        <div class="card-wrap">
+            {% if dogs != None %}
+                {% for dog in dogs %}
+                    <div class="card">
+                        <div class="card-image-area">
+                            <img src="{{ dog[5] }}" class="card-image"/>
+                        </div>
+                        <div class="card-text-wrapper">
+                            <div class="card-title-area">
+                                <p class="card-p">{{ dog[1] }}</p>
+                            </div>
+                            <div class="card-description-area">
+                                <p class="card-p">{{ dog[4] }}</p>
+                            </div>
+                            <div class="card-date-area">
+                                <p class="card-p">Birth date: {{ dog[2] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            
+        </div>
+
+    </div>
+
+{% endblock %}

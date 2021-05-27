@@ -3,9 +3,14 @@ console.log("radi");
 const imgInp = document.getElementById("image-inpt");
 imgInp.onchange = evt => {
     const exists = document.getElementById('preview');
+    const oldAvat = document.getElementById('avat-img');
     if(exists !== null){
         exists.remove();
         }
+    if(oldAvat !== null){
+        oldAvat.remove();
+    }
+    
     const [file] = imgInp.files
     if (file) {
         const container = document.getElementById('avatar')

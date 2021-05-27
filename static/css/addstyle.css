@@ -115,3 +115,20 @@
     align-self: center;
 }
 
+#separator-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#traits-separator{
+    width: 80%;
+    position: relative;
+    height: 2px;
+    background-color: var(--light);
+    align-self: center;
+}
+
+#traits-separator-text{
+    position: absolute;
+}

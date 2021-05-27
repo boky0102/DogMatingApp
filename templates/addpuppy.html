@@ -10,15 +10,17 @@
                     <input class="input-form" name="name">
                     <p class="form-label">Description</p>
                     <textarea class="input-form textarea" name="description" row=5></textarea>
-                    <p class="form-label">Species</p>
+                    <p class="form-label">Breed</p>
                     <select class="input-form" name="breed">
-                        <option>Retriver</option>
-                        <option>Haski</option>
-                        <option>Njem ovcar</option>
+                        {% for breed in breedOptions %}
+                            <option>{{ breed }}</option>
+
+                        {% endfor %}
+
                     </select>
                     <p class="form-label">Date of birth</p>
                     <input type="date" class="input-form" name="birthDate"/>
-                    <button class="btn btn-sec" type="submit">ADD PUPPY</button>
+                    
                 
             </div>
             <div id="right-part">
@@ -38,6 +40,15 @@
                 </div>
             </div>
         </div>
+        <div id="separator-wrap">
+            <div id="traits-separator">
+                <p id="traits-separator-text">Tratits</p>
+            </div>
+        </div>
+        <div class="traits-wrapper">
+
+        </div>
+        <button class="btn btn-sec" type="submit">ADD PUPPY</button>
         </form>
 
         <script src="{{url_for('static', filename='scripts/upload.js')}}"></script>
