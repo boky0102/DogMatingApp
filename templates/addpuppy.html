@@ -42,15 +42,131 @@
         </div>
         <div id="separator-wrap">
             <div id="traits-separator">
-                <p id="traits-separator-text">Tratits</p>
+                <p id="traits-separator-text">Traits</p>
             </div>
         </div>
         <div class="traits-wrapper">
+            <div class="traits-content">
+                <table>
+                    <tr>
+                        <td>
+                            <p class="trait-name">PLAYFUL</p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap" id="playful">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="playful-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="trait-name"> AGGRESSIVE </p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="aggressive-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="trait-name"> CURIOUS </p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="curious-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="trait-name"> SOCIAL </p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="social-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="trait-name"> DEMANDING </p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="demanding-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="trait-name"> DOMINANT </p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="dominant-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="trait-name"> PROTECTIVE </p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="protective-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="trait-name"> APARTMENT LIVING </p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="apartment-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="trait-name"> VOCAL </p>
+                        </td>
+                        <td>
+                            <div class="rating-box-wrap">
+                            {% for i in range(10) %}
+                                <div class="rating-box" id="vocal-{{i + 1}}"></div>
+                            {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
 
+                </table>
+            </div>
+
+
+            
         </div>
         <button class="btn btn-sec" type="submit">ADD PUPPY</button>
         </form>
 
         <script src="{{url_for('static', filename='scripts/upload.js')}}"></script>
+        <script src="{{url_for('static', filename='scripts/traits.js')}}"></script>
     
 {% endblock %}
