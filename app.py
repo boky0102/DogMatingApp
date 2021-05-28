@@ -12,6 +12,7 @@ from flask_login import UserMixin
 from datetime import datetime
 from flask import session
 from breeds import breeds
+from random import randint
 
 
 app = Flask(__name__)
@@ -172,6 +173,18 @@ def addPuppy():
         dateOfBirth = puppyDetails['birthDate']
         img = request.files['img']
         imgSrc = "./static/images/noavatar-dog.png"
+        playful = int(puppyDetails['playful'])
+        curious = int(puppyDetails['curious'])
+        social = int(puppyDetails['social'])
+        aggressive = int(puppyDetails['aggressive'])
+        demanding = int(puppyDetails['demanding'])
+        dominant = int(puppyDetails['dominant'])
+        protective = int(puppyDetails['protective'])
+        apartment = int(puppyDetails['apartment'])
+        vocal = int(puppyDetails['vocal'])
+
+        if type(social) is str:
+            print("string")
 
         if request.files:
 
@@ -193,11 +206,23 @@ def addPuppy():
 
             else:
                 return redirect("/add-puppy")
+
+        time = datetime.now()
+        dt_string = time.strftime("%d-%m-%Y%H-%M-%S")
+        tid = dt_string + str(randint(0, 10000))
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "INSERT INTO traits(TID,playful,curious,social,aggressive,demanding,dominant,protective,apartment,vocal) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (
+                tid, playful, curious, social, aggressive, demanding, dominant, protective, apartment, vocal)
+        )
+        mysql.connection.commit()
+        cur.close()
+
         uid = session["uid"]
         cur = mysql.connection.cursor()
         cur.execute(
-            "INSERT INTO dog(name,birth_day,species,description,avatar_src,UID) VALUES(%s,%s,%s,%s,%s,%s)", (
-                puppyname, dateOfBirth, breed, description, imgSrc, uid)
+            "INSERT INTO dog(name,birth_day,species,description,avatar_src,UID,TID) VALUES(%s,%s,%s,%s,%s,%s,%s)", (
+                puppyname, dateOfBirth, breed, description, imgSrc, uid, tid)
         )
         mysql.connection.commit()
         cur.close()

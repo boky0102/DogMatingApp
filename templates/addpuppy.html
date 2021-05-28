@@ -7,11 +7,11 @@
         <div class="wrap">
             <div class="add-form-wrap">
                     <p class="form-label">Name</p>
-                    <input class="input-form" name="name">
+                    <input class="input-form" required name="name">
                     <p class="form-label">Description</p>
-                    <textarea class="input-form textarea" name="description" row=5></textarea>
+                    <textarea class="input-form textarea" required name="description" row=5></textarea>
                     <p class="form-label">Breed</p>
-                    <select class="input-form" name="breed">
+                    <select class="input-form" name="breed" required>
                         {% for breed in breedOptions %}
                             <option>{{ breed }}</option>
 
@@ -19,7 +19,7 @@
 
                     </select>
                     <p class="form-label">Date of birth</p>
-                    <input type="date" class="input-form" name="birthDate"/>
+                    <input type="date" required class="input-form" name="birthDate"/>
                     
                 
             </div>
@@ -65,7 +65,7 @@
                             <p class="trait-name"> AGGRESSIVE </p>
                         </td>
                         <td>
-                            <div class="rating-box-wrap">
+                            <div class="rating-box-wrap" id="aggressive">
                             {% for i in range(10) %}
                                 <div class="rating-box" id="aggressive-{{i + 1}}"></div>
                             {% endfor %}
@@ -77,7 +77,7 @@
                             <p class="trait-name"> CURIOUS </p>
                         </td>
                         <td>
-                            <div class="rating-box-wrap">
+                            <div class="rating-box-wrap" id="curious">
                             {% for i in range(10) %}
                                 <div class="rating-box" id="curious-{{i + 1}}"></div>
                             {% endfor %}
@@ -89,7 +89,7 @@
                             <p class="trait-name"> SOCIAL </p>
                         </td>
                         <td>
-                            <div class="rating-box-wrap">
+                            <div class="rating-box-wrap" id="social">
                             {% for i in range(10) %}
                                 <div class="rating-box" id="social-{{i + 1}}"></div>
                             {% endfor %}
@@ -101,7 +101,7 @@
                             <p class="trait-name"> DEMANDING </p>
                         </td>
                         <td>
-                            <div class="rating-box-wrap">
+                            <div class="rating-box-wrap" id="demanding">
                             {% for i in range(10) %}
                                 <div class="rating-box" id="demanding-{{i + 1}}"></div>
                             {% endfor %}
@@ -113,7 +113,7 @@
                             <p class="trait-name"> DOMINANT </p>
                         </td>
                         <td>
-                            <div class="rating-box-wrap">
+                            <div class="rating-box-wrap" id="dominant">
                             {% for i in range(10) %}
                                 <div class="rating-box" id="dominant-{{i + 1}}"></div>
                             {% endfor %}
@@ -125,7 +125,7 @@
                             <p class="trait-name"> PROTECTIVE </p>
                         </td>
                         <td>
-                            <div class="rating-box-wrap">
+                            <div class="rating-box-wrap" id="protective">
                             {% for i in range(10) %}
                                 <div class="rating-box" id="protective-{{i + 1}}"></div>
                             {% endfor %}
@@ -137,7 +137,7 @@
                             <p class="trait-name"> APARTMENT LIVING </p>
                         </td>
                         <td>
-                            <div class="rating-box-wrap">
+                            <div class="rating-box-wrap" id="apartment">
                             {% for i in range(10) %}
                                 <div class="rating-box" id="apartment-{{i + 1}}"></div>
                             {% endfor %}
@@ -149,7 +149,7 @@
                             <p class="trait-name"> VOCAL </p>
                         </td>
                         <td>
-                            <div class="rating-box-wrap">
+                            <div class="rating-box-wrap" id="vocal">
                             {% for i in range(10) %}
                                 <div class="rating-box" id="vocal-{{i + 1}}"></div>
                             {% endfor %}
@@ -159,11 +159,19 @@
 
                 </table>
             </div>
-
-
             
         </div>
-        <button class="btn btn-sec" type="submit">ADD PUPPY</button>
+                <input required class="hiden-trait-value" type="number" name="playful" id="playful-input"/>
+                <input required class="hiden-trait-value" type="number" name="aggressive" id="aggressive-input"/>
+                <input required class="hiden-trait-value" type="number" name="curious" id="curious-input"/>
+                <input required class="hiden-trait-value" type="number" name="social" id="social-input"/>
+                <input required class="hiden-trait-value" type="number" name="aggressive" id="aggressive-input"/>
+                <input required class="hiden-trait-value" type="number" name="demanding" id="demanding-input"/>
+                <input required class="hiden-trait-value" type="number" name="dominant" id="dominant-input"/>
+                <input required class="hiden-trait-value" type="number" name="protective" id="protective-input"/>
+                <input required class="hiden-trait-value" type="number" name="apartment" id="apartment-input"/>
+                <input required class="hiden-trait-value" type="number" name="vocal" id="vocal-input"/>
+                <button class="btn btn-sec" id="add-puppy-submit-btn" type="submit">ADD PUPPY</button>
         </form>
 
         <script src="{{url_for('static', filename='scripts/upload.js')}}"></script>
