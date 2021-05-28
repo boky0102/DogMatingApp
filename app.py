@@ -326,6 +326,14 @@ def explore():
         return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result)
 
 
+@app.route('/dog/<dogid>', methods=['GET', 'POST'])
+@flask_login.login_required
+def getDog(dogid):
+    thisId = dogid
+    if request.method == 'GET':
+        return render_template('dogprofile.html', currentAvatar=session['avatSrc'])
+
+
 @app.route('/logout')
 def logout():
     flask_login.logout_user()

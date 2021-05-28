@@ -191,3 +191,7 @@ table{
 .hiden-trait-value{
     display: none;
 }
+
+#p-select-alert{
+    margin-left: 180px;
+}
