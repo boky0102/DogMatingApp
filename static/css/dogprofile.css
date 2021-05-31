@@ -1,0 +1,159 @@
+:root {
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
+    --glass: rgba(255,255,255, 0.4);
+    --glass2: rgba(255,255,255, 0.3);
+    --font: 'Fredoka One', cursive;
+}
+
+/* WRAP */
+
+#dog-profile-wrap{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+/* USER CARD */
+
+#user-card{
+    width: 20%;
+    height: 450px;
+    background-color: var(--primary);
+    margin: 20px;
+    border-radius: 15px;
+    position: sticky;
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    
+}
+
+#user-card-avatar{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background-color: var(--light);
+
+}
+
+#avatar-name-wrap{
+    display: flex;
+    height: 70%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttons-wrap{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.user-card-btn{
+    background-color: var(--secondary);
+    border-radius: 5px;
+    border: 1px solid var(--light);
+    width: 100px;
+}
+
+.user-card-btn:hover{
+    scale: 1.1;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+
+/* DOG AREA */
+
+.p-dog-card{
+    font-family: var(--font);
+    color: var(--dark);
+}
+
+#dog-area{
+    width: 60%;
+    /* border: 2px solid var(--light); */
+    /* background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 0.7),
+        rgba(255, 255, 255, 0.2)
+      ); */
+
+    background-color: var(--secondary);
+
+    border-radius: 15px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid var(--light);
+
+}
+
+#dog-picture{
+    height: 40%;
+    background-color: lawngreen;
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom: 2px solid var(--light);
+}
+
+#dog-picture-large{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+
+    }
+
+#owner-card-avat{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#static-traits{
+    margin-bottom: 0;
+}
+
+.trait-column{
+    padding-right: 50px;
+}
+
+.rating-box-range{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: var(--dark);
+    transition: all 0.2s ease-out;
+}
+
+.rating-box-not-range{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: var(--glass);
+    transition: all 0.2s ease-out;
+}
+
+#mating-req-btn{
+    padding: 10px;
+    width: auto;
+    margin-top: 30px;
+}
+
+#mating-req-select{
+    width: 300px;
+}

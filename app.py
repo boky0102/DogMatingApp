@@ -138,7 +138,6 @@ def isAuth():
     if len(result) > 0:
         pwToCheck = result[0][1]
         if bcrypt.check_password_hash(pwToCheck, password):
-            print(result)
             user = User()
             user.id = result[0][0]
             session["uid"] = result[0][2]
@@ -182,9 +181,6 @@ def addPuppy():
         protective = int(puppyDetails['protective'])
         apartment = int(puppyDetails['apartment'])
         vocal = int(puppyDetails['vocal'])
-
-        if type(social) is str:
-            print("string")
 
         if request.files:
 
@@ -257,8 +253,6 @@ def profile():
         country = userDetails['country']
         img = request.files['img']
 
-        print(request.form)
-
         imgSrc = "./static/images/default-avatar.png"
         if request.files:
 
@@ -321,7 +315,6 @@ def explore():
             "SELECT * FROM dog WHERE UID != %s", (currentUserId,)
         )
         result = cur.fetchall()
-        print(result)
 
         return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result)
 
@@ -331,7 +324,37 @@ def explore():
 def getDog(dogid):
     thisId = dogid
     if request.method == 'GET':
-        return render_template('dogprofile.html', currentAvatar=session['avatSrc'])
+        print(session['avatSrc'])
+        curAvatSrc = session['avatSrc']
+        curAvatSrc = curAvatSrc[1:]
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT d.name, d.description, d.birth_day, d.species, d.avatar_src, u.username, u.img_src, t.playful, t.curious, t.social, t.aggressive, t.demanding, t.dominant, t.protective, t.apartment, t.vocal FROM dog d INNER JOIN user u ON d.UID = u.UID INNER JOIN traits t ON  d.TID = t.TID WHERE d.DID = %s", (
+                dogid,)
+        )
+        result = cur.fetchone()
+        cur.close()
+        print(result)
+
+        dogPicture = result[4][1:]
+        ownerPicture = result[6][1:]
+        traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
+                      'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
+
+        uid = session['uid']
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT name,DID FROM dog WHERE UID = %s", (uid,)
+        )
+        currentUserDogs = cur.fetchall()
+        cur.close()
+        return render_template('dogprofile.html', currentAvatar=curAvatSrc, dog=result, dogImg=dogPicture, ownerImg=ownerPicture, traits=traitNames, curUserDogs=currentUserDogs)
+
+    if request.method == 'POST':
+
+        cur = mysql.connection.cursor()
+        cur.execute()
 
 
 @app.route('/logout')

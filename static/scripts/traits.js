@@ -121,6 +121,8 @@ listOfTraits.forEach((currentRow) => {
 
 
 
+
+
     
 
 

@@ -3,7 +3,83 @@
 
 {% block content %}
 
-    <div>
+    <div id="dog-profile-wrap">
+
+        <div id="dog-area">
+            <div id="dog-picture">
+                <img id="dog-picture-large" src="{{ dogImg }}">
+            </div>
+            <div>
+                <p class="p-dog-card">{{ dog[0] }}</p>
+            </div>
+            <div>
+                <p class="p-dog-card">{{ dog[1] }}</p>
+            </div>
+            <div>
+                <p class="p-dog-card">Birthday:  {{ dog[2] }}</p>
+            </div>
+            <div>
+                <table id="static-traits">
+                    {% for m in range(9) %}
+                    <tr>
+                        <td class="trait-column"><p class="p-form p-dog-card">{{ traits[m] }}</p></td>
+                        <td>
+                            <div class="rating-box-wrap">
+                                {% for n in range(10) %}
+
+                                    {% if n <= dog[m+7] %}
+                                        <div class="rating-box-range">
+                                        </div>
+                                    {% else %}
+                                        <div class="rating-box-not-range"></div>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            <div>
+                <form method="POST">
+                    <button class="btn" id="mating-req-btn" type="submit">
+                        SEND REQUEST
+                    </button>
+                    <select class="input-form" id="mating-req-select" required>
+                        {% for dog in curUserDogs %}
+                            <option>
+                                {{ dog[0] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+        <div id="user-card">
+            <p class="p-form">OWNER</p>
+            <div id="avatar-name-wrap">
+                <div id="user-card-avatar">
+                    <img id="owner-card-avat" src="{{ ownerImg }}" />
+                </div>
+                <div id="user-card-username">
+
+                </div>
+                <p class="p-form">{{ dog[5] }}</p>
+            </div>
+            <div id="buttons-wrap">
+                <button class="user-card-btn">
+                    <p class="p-form">CONTACT</p>                
+                </button>
+                <button class="user-card-btn">
+                    <p class="p-form">PROFILE</p>
+                </button>
+            </div>
+        </div>
+
         
     </div>
 
