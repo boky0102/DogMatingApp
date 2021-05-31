@@ -127,6 +127,18 @@
     justify-self: center;
 }
 
+#filter-wrap{
+    display: flex;
+    align-items: center;
+}
+
+.filter-item{
+    margin-left: 40px;
+}
+
+#filter-btn{
+    margin-top: 50px;
+}
 
 @media screen and (max-width: 1300px){
     .card{

@@ -4,15 +4,32 @@
 {% block content %}
 
     <div id="explore-wrap">
-        <label for="categorySelect"><p class="p-form">Filter by breed: </p></label>
-        <select class="input-form choose-cat" name="categorySelect">
-            <option>Any</option>
-            {% for breed in breedOptions %}
-            
-            <option>{{ breed }}</option>
-            
-            {% endfor %}
-        </select>
+        <form method="POST">
+            <div id="filter-wrap">
+                <div class="filter-item">
+                    <label for="categorySelect"><p class="p-form">Filter by breed: </p></label>
+                    <select class="input-form choose-cat" name="breed">
+                        <option>Any</option>
+                        {% for breed in breedOptions %}
+                        
+                        <option>{{ breed }}</option>
+                        
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="gender"><p class="p-form">Filter by gender</p></label>
+                    <select class="input-form choose-cat" name="gender">
+                        <option>Any</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+                <div class="filter-item" id="filter-btn">
+                    <button class="btn btn-sec" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
 
         <div class="card-wrap">
             {% if dogs != None %}

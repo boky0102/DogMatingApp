@@ -169,6 +169,7 @@ def addPuppy():
         puppyname = puppyDetails['name']
         description = puppyDetails['description']
         breed = puppyDetails['breed']
+        gender = puppyDetails['gender']
         dateOfBirth = puppyDetails['birthDate']
         img = request.files['img']
         imgSrc = "./static/images/noavatar-dog.png"
@@ -217,8 +218,8 @@ def addPuppy():
         uid = session["uid"]
         cur = mysql.connection.cursor()
         cur.execute(
-            "INSERT INTO dog(name,birth_day,species,description,avatar_src,UID,TID) VALUES(%s,%s,%s,%s,%s,%s,%s)", (
-                puppyname, dateOfBirth, breed, description, imgSrc, uid, tid)
+            "INSERT INTO dog(name,birth_day,species,description,avatar_src,UID,TID,gender) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)", (
+                puppyname, dateOfBirth, breed, description, imgSrc, uid, tid, gender)
         )
         mysql.connection.commit()
         cur.close()
@@ -315,8 +316,40 @@ def explore():
             "SELECT * FROM dog WHERE UID != %s", (currentUserId,)
         )
         result = cur.fetchall()
-
+        cur.close()
         return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result)
+    if request.method == 'POST':
+        filterOptions = request.form
+        breed = filterOptions['breed']
+        gender = filterOptions['gender']
+        cur = mysql.connection.cursor()
+
+        if breed == "Any" and gender == "Any":
+            cur.execute(
+                "SELECT * FROM dog WHERE UID != %s", (currentUserId,)
+            )
+            result = cur.fetchall()
+            return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result)
+
+        elif breed == "Any" and gender != "Any":
+            cur.execute(
+                "SELECT * FROM dog WHERE UID != %s AND gender = %s", (
+                    currentUserId, gender)
+            )
+        elif breed != "Any" and gender == "Any":
+            cur.execute(
+                "SELECT * FROM dog WHERE UID != %s AND species = %s", (
+                    currentUserId, breed
+                )
+            )
+        else:
+            cur.execute(
+                "SELECT * FROM dog WHERE UID != %s AND species = %s AND gender = %s", (
+                    currentUserId, breed, gender
+                )
+            )
+        results = cur.fetchall()
+        return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=results)
 
 
 @app.route('/dog/<dogid>', methods=['GET', 'POST'])
@@ -330,7 +363,7 @@ def getDog(dogid):
 
         cur = mysql.connection.cursor()
         cur.execute(
-            "SELECT d.name, d.description, d.birth_day, d.species, d.avatar_src, u.username, u.img_src, t.playful, t.curious, t.social, t.aggressive, t.demanding, t.dominant, t.protective, t.apartment, t.vocal FROM dog d INNER JOIN user u ON d.UID = u.UID INNER JOIN traits t ON  d.TID = t.TID WHERE d.DID = %s", (
+            "SELECT d.name, d.description, d.birth_day, d.species, d.avatar_src, u.username, u.img_src, d.gender, t.playful, t.curious, t.social, t.aggressive, t.demanding, t.dominant, t.protective, t.apartment, t.vocal FROM dog d INNER JOIN user u ON d.UID = u.UID INNER JOIN traits t ON  d.TID = t.TID WHERE d.DID = %s", (
                 dogid,)
         )
         result = cur.fetchone()
@@ -345,7 +378,8 @@ def getDog(dogid):
         uid = session['uid']
         cur = mysql.connection.cursor()
         cur.execute(
-            "SELECT name,DID FROM dog WHERE UID = %s", (uid,)
+            "SELECT name,DID FROM dog WHERE UID = %s AND gender != %s", (
+                uid, result[7])
         )
         currentUserDogs = cur.fetchall()
         cur.close()
@@ -353,8 +387,31 @@ def getDog(dogid):
 
     if request.method == 'POST':
 
+        puppy = request.form
+        reqDID = puppy['requestDog']
+        uid = session['uid']
+
         cur = mysql.connection.cursor()
-        cur.execute()
+        cur.execute(
+            "SELECT DID FROM dog WHERE name = %s AND UID = %s", (
+                reqDID, uid
+            )
+        )
+        reqId = cur.fetchone()
+        cur.close()
+
+        time = datetime.now()
+        dt_string = time.strftime("%Y-%m-%d")
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "INSERT INTO mating_request(REQ_DID, REC_DID, date_created, scheduled, completed) VALUES (%s,%s,%s,FALSE,FALSE)", (
+                reqId[0], int(dogid), dt_string
+            )
+        )
+        mysql.connection.commit()
+        cur.close()
+        return redirect('/explore')
 
 
 @app.route('/logout')

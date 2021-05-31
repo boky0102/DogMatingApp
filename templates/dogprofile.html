@@ -16,6 +16,12 @@
                 <p class="p-dog-card">{{ dog[1] }}</p>
             </div>
             <div>
+                <p class="p-dog-card">Breed:  {{ dog[3] }}</p>
+            </div>
+            <div>
+                <p class="p-dog-card">Gender: {{ dog[7] }}</p>
+            </div>
+            <div>
                 <p class="p-dog-card">Birthday:  {{ dog[2] }}</p>
             </div>
             <div>
@@ -27,7 +33,7 @@
                             <div class="rating-box-wrap">
                                 {% for n in range(10) %}
 
-                                    {% if n <= dog[m+7] %}
+                                    {% if n <= dog[m+8] %}
                                         <div class="rating-box-range">
                                         </div>
                                     {% else %}
@@ -42,16 +48,22 @@
                 </table>
             <div>
                 <form method="POST">
-                    <button class="btn" id="mating-req-btn" type="submit">
-                        SEND REQUEST
-                    </button>
-                    <select class="input-form" id="mating-req-select" required>
-                        {% for dog in curUserDogs %}
-                            <option>
-                                {{ dog[0] }}
-                            </option>
-                        {% endfor %}
-                    </select>
+                    <div id="mating-form-wrap">
+                        <div id="dog-select">
+                            <label class="p-dog-card dog-card-label" for="requestDog">YOUR DOG: </label>
+                            <select class="input-form" id="mating-req-select" name="requestDog" required>
+                                {% for dog in curUserDogs %}
+                                    <option>
+                                        {{ dog[0] }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    
+                        <button class="btn" id="mating-req-btn" type="submit">
+                            SEND REQUEST
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
