@@ -1,0 +1,72 @@
+{% extends 'dog.html' %}
+{% set active_request = "requests" %}
+
+{% block requests %}
+
+    <div id="request-wrapper">
+        <form  method="POST">
+        <input name="id" id="curId" class="hidden-input" />
+        <input name="requestType" id="requestType" class="hidden-input"/> 
+        {% for request in requestsData %}
+            <div class="request-card">
+                <a href="/dog/{{ request[0] }}" id="request-card-info-part">
+                    <div class="request-card-info-wrap">
+                        <div class="request-card-image-container">
+                            <img class="request-card-image" src="{{ request[5] }}">
+                        </div>
+                        <div class="request-card-info">
+                            <p class="p-form">{{ request[1] }}</p>
+                        </div>
+                        <div class="request-card-info">
+                            <p class="p-form">{{ request[3] }}</p>
+                        </div>
+                        <div class="request-card-info">
+                            <p class="p-form">{{ request[2] }}</p>
+                        </div>
+                    </div>
+                    <div class="request-traits">
+                        <table >
+                            {% for m in range(9) %}
+                            <tr >
+                                <td class="traits-column">{{ traits[m] }}</td>
+                                <td>
+                                    <div class="rating-box-wrap">
+                                        {% for n in range(10) %}
+        
+                                            {% if n <= request[m+18] %}
+                                                <div class="rating-box-range rating-box-smaller">
+                                                </div>
+                                            {% else %}
+                                                <div class="rating-box-not-range rating-box-smaller"></div>
+                                            {% endif %}
+        
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </a>
+                <div class="request-form">
+                    
+                        <div class="request-form-accept">
+                            <button type="submit" id="accept-{{ request[0] }}" onclick="handleAcceptClick(this.id)" class="request-form-button accept-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 32 32"><path d="M26 26H6V6h14.752L22 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V12.794L26 16v10zm3.366-23.772a1.396 1.396 0 0 0-1.936.406L16.558 18.318l-4.206-4.8a1.4 1.4 0 1 0-1.902 2.054l5.056 5.77c.032.052.082.092.122.14l.128.146c.016.014.036.018.052.032.04.032.064.076.106.106.086.056.18.092.274.126.022.008.04.022.062.028.14.046.286.074.43.074.006 0 .012-.004.018-.004.38.002.758-.138 1.036-.438.052-.056.072-.124.114-.186l.006-.006L29.772 4.166a1.4 1.4 0 0 0-.406-1.938z"/></svg>
+                            </button>
+                        </div>
+                        <div class="request-form-decline">
+                            <button type="submit" id="decline-{{ request[0] }}" onclick="handleAcceptClick(this.id)" class="request-form-button decline-button">
+                                <svg class="cancel-button" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 32 32"><path d="M30.25,31h-28a1,1,0,0,1-1-1V2a1,1,0,0,1,1-1h28a1,1,0,0,1,1,1V30A1,1,0,0,1,30.25,31Zm-27-2h26V3h-26ZM24,25a1,1,0,0,1-.71-.29L16,17.41l-7.29,7.3a1,1,0,1,1-1.42-1.42L14.59,16,7.29,8.71A1,1,0,1,1,8.71,7.29L16,14.59l7.29-7.3a1,1,0,1,1,1.42,1.42L17.41,16l7.3,7.29a1,1,0,0,1,0,1.42A1,1,0,0,1,24,25Z" data-name="Layer 2"/></svg>
+                            </button>
+                        </div>
+                    
+                </div>
+
+            </div>
+        {% endfor %}
+        </form>
+    </div>
+    <script src="{{url_for('static', filename='scripts/request.js')}}"></script>
+
+{% endblock %}

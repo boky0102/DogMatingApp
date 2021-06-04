@@ -1,0 +1,84 @@
+:root {
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
+    --glass: rgba(255,255,255, 0.4);
+    --glass2: rgba(255,255,255, 0.3);
+    --font: 'Fredoka One', cursive;
+}
+
+
+#dog-wrap{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-top: 40px;
+}
+
+#left-card{
+    width: 20%;
+    height: 400px;
+    border-radius: 15px;
+    border: 2px solid var(--light);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 40px;
+}
+
+#image-part{
+    height: 70%;
+    width: 100%;
+}
+
+#left-part-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+#request-wrap{
+    width: 70%;
+    height: 1000px;
+    border-radius: 15px;
+}
+
+.dog-nav-btn{
+    height: 97%;
+    outline-style: none;
+    border-style: none;
+    border-top: 2px solid var(--light);
+    background-color: var(--secondary);
+    color: var(--light);
+    font-family: var(--font);
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.dog-nav-bottom-btn{
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+}
+
+
+.dog-nav-btn:hover{
+    background-color: var(--dark);
+    cursor: pointer;
+}
+
+.a-dog-nav{
+    flex:1;
+    
+}
+
+#request-nav-active-elem{
+    background-color: var(--dark);
+}

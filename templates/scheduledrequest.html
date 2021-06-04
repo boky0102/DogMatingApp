@@ -1,0 +1,67 @@
+{% extends 'dog.html' %}
+{% set active_request = "scheduled" %}
+
+{% block requests %}
+
+<div id="request-wrapper">
+    <form  method="POST">
+    <input name="id" id="curId" class="hidden-input" />
+    <input name="requestType" id="requestType" class="hidden-input"/> 
+    {% for request in requestsData %}
+        <div class="request-card">
+            <a href="/dog/{{ request[0] }}" id="request-card-info-part">
+                <div class="request-card-info-wrap">
+                    <div class="request-card-image-container">
+                        <img class="request-card-image" src="{{ request[5] }}">
+                    </div>
+                    <div class="request-card-info">
+                        <p class="p-form">{{ request[1] }}</p>
+                    </div>
+                    <div class="request-card-info">
+                        <p class="p-form">{{ request[3] }}</p>
+                    </div>
+                    <div class="request-card-info">
+                        <p class="p-form">{{ request[2] }}</p>
+                    </div>
+                </div>
+                <div class="request-traits">
+                    <table >
+                        {% for m in range(9) %}
+                        <tr >
+                            <td class="traits-column">{{ traits[m] }}</td>
+                            <td>
+                                <div class="rating-box-wrap">
+                                    {% for n in range(10) %}
+    
+                                        {% if n <= request[m+18] %}
+                                            <div class="rating-box-range rating-box-smaller">
+                                            </div>
+                                        {% else %}
+                                            <div class="rating-box-not-range rating-box-smaller"></div>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </a>
+            <div class="request-form">
+                
+                    <div class="request-form-decline decline-scheduled">
+                        <button type="submit" id="decline-{{ request[0] }}" onclick="handleAcceptClick(this.id)" class="request-form-button decline-button decline-button-scheduled">
+                            <svg class="cancel-button" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 32 32"><path d="M30.25,31h-28a1,1,0,0,1-1-1V2a1,1,0,0,1,1-1h28a1,1,0,0,1,1,1V30A1,1,0,0,1,30.25,31Zm-27-2h26V3h-26ZM24,25a1,1,0,0,1-.71-.29L16,17.41l-7.29,7.3a1,1,0,1,1-1.42-1.42L14.59,16,7.29,8.71A1,1,0,1,1,8.71,7.29L16,14.59l7.29-7.3a1,1,0,1,1,1.42,1.42L17.41,16l7.3,7.29a1,1,0,0,1,0,1.42A1,1,0,0,1,24,25Z" data-name="Layer 2"/></svg>
+                        </button>
+                    </div>
+                
+            </div>
+
+        </div>
+    {% endfor %}
+    </form>
+</div>
+<script src="{{url_for('static', filename='scripts/request.js')}}"></script>
+
+{% endblock %}

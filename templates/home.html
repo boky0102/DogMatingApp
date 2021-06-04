@@ -14,6 +14,9 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/explore.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/dogprofile.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/dog.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/requests.css') }}">
+        
         
     </head>
     <body>
@@ -30,7 +33,7 @@
                     <a href="/profile" id="{{ 'sidebar-active-elem' if active_page == 'profile' else '' }}" class="sidebar-elem"><p class="text-in-nav">Profile</p></a>
                     <a href="/explore" id="{{ 'sidebar-active-elem' if active_page == 'explore' else '' }}" class="sidebar-elem"><p class="text-in-nav">Explore</p></a>
                 
-                    <a href="/profile" class="sidebar-elem"><p class="text-in-nav">My Requests</p></a>
+                    <a href="/requests" id="{{ 'sidebar-active-elem' if active_page == 'requests' else '' }}" class="sidebar-elem"><p class="text-in-nav">My dogs</p></a>
                     <a href="/profile" class="sidebar-elem"><p class="text-in-nav">Profile</p></a>
                 </div>
                 

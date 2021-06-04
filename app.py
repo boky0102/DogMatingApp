@@ -106,7 +106,7 @@ def landing():
         result = cur.fetchall()
         cur.close()
         if len(result) == 0:
-            defaultAvatar = "./static/images/noavatar-dog.png"
+            defaultAvatar = "/static/images/noavatar-dog.png"
             pw_hash = bcrypt.generate_password_hash(
                 password, 10).decode('utf-8')
             cur2 = mysql.connection.cursor()
@@ -114,7 +114,7 @@ def landing():
                 "INSERT INTO user(username, password, img_src) VALUES(%s, %s, %s)", (username, pw_hash, defaultAvatar))
             mysql.connection.commit()
             cur2.close()
-            return 'success'
+            return redirect("/")
         else:
             flash('Username already exists.')
             return redirect("/")
@@ -219,7 +219,7 @@ def addPuppy():
         cur = mysql.connection.cursor()
         cur.execute(
             "INSERT INTO dog(name,birth_day,species,description,avatar_src,UID,TID,gender) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)", (
-                puppyname, dateOfBirth, breed, description, imgSrc, uid, tid, gender)
+                puppyname, dateOfBirth, breed, description, imgSrc[1:], uid, tid, gender)
         )
         mysql.connection.commit()
         cur.close()
@@ -254,7 +254,7 @@ def profile():
         country = userDetails['country']
         img = request.files['img']
 
-        imgSrc = "./static/images/default-avatar.png"
+        imgSrc = "/static/images/default-avatar.png"
         if request.files:
 
             if allowed_image(img.filename):
@@ -296,7 +296,7 @@ def profile():
             cur = mysql.connection.cursor()
             cur.execute(
                 "UPDATE user SET username=(%s), img_src=(%s), AID=(%s) WHERE UID=(%s)", (
-                    username, imgSrc, aid, uid
+                    username, imgSrc[1:], aid, uid
                 )
             )
             mysql.connection.commit()
@@ -359,7 +359,7 @@ def getDog(dogid):
     if request.method == 'GET':
         print(session['avatSrc'])
         curAvatSrc = session['avatSrc']
-        curAvatSrc = curAvatSrc[1:]
+        curAvatSrc = curAvatSrc
 
         cur = mysql.connection.cursor()
         cur.execute(
@@ -370,8 +370,8 @@ def getDog(dogid):
         cur.close()
         print(result)
 
-        dogPicture = result[4][1:]
-        ownerPicture = result[6][1:]
+        dogPicture = result[4]
+        ownerPicture = result[6]
         traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
                       'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
 
@@ -400,18 +400,159 @@ def getDog(dogid):
         reqId = cur.fetchone()
         cur.close()
 
-        time = datetime.now()
-        dt_string = time.strftime("%Y-%m-%d")
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM mating_request WHERE REQ_DID = %s AND REC_DID = %s", (
+                reqId[0], int(dogid)
+            )
+        )
+        exists = cur.fetchone()
+        cur.close()
+
+        if exists is None:
+            time = datetime.now()
+            dt_string = time.strftime("%Y-%m-%d")
+
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "INSERT INTO mating_request(REQ_DID, REC_DID, date_created, scheduled, completed) VALUES (%s,%s,%s,FALSE,FALSE)", (
+                    reqId[0], int(dogid), dt_string
+                )
+            )
+            mysql.connection.commit()
+            cur.close()
+            return redirect('/explore')
+
+        else:
+            flash("You have already sent mating request to this dog")
+            return redirect("/dog/"+dogid)
+
+
+@app.route('/requests', methods=['GET', 'POST'])
+@flask_login.login_required
+def requests():
+    if request.method == 'GET':
+        avatSrc = session['avatSrc']
+        user = session['uid']
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM dog WHERE UID = %s", (
+                user,
+            )
+        )
+        result = cur.fetchall()
+
+        cur.close()
+        return render_template('mydogs.html', currentAvatar=avatSrc, dogs=result)
+
+
+@app.route('/mydog/<dogid>/requests', methods=['GET', 'POST'])
+@flask_login.login_required
+def myDogRequests(dogid):
+    if request.method == 'GET':
+
+        avatSrc = session['avatSrc']
 
         cur = mysql.connection.cursor()
         cur.execute(
-            "INSERT INTO mating_request(REQ_DID, REC_DID, date_created, scheduled, completed) VALUES (%s,%s,%s,FALSE,FALSE)", (
-                reqId[0], int(dogid), dt_string
+            "SELECT * FROM dog WHERE DID = %s", (
+                dogid,
+            )
+        )
+        result = cur.fetchone()
+        dogSrc = result[5]
+        cur.close()
+
+        if session['uid'] == result[6]:
+
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "SELECT * FROM dog d INNER JOIN mating_request m ON d.DID = m.REQ_DID INNER JOIN traits t ON t.TID = d.TID WHERE REC_DID = %s and scheduled=FALSE", (
+                    dogid,
+                )
+            )
+            requests = cur.fetchall()
+            traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
+                          'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
+            return render_template('dogrequests.html', currentAvatar=avatSrc, dogData=result, dogImg=dogSrc, requestsData=requests, traits=traitNames)
+        else:
+            return redirect("/home")
+
+    if request.method == 'POST':
+        requestData = request.form
+        id = requestData['id']
+        type = requestData['requestType']
+
+        if type == "accept":
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "UPDATE mating_request SET scheduled=TRUE WHERE REQ_DID=%s AND REC_DID=%s", (
+                    int(id), dogid
+                )
+            )
+            mysql.connection.commit()
+            cur.close()
+            return redirect("/mydog/"+dogid+"/scheduled")
+
+        else:
+
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "DELETE FROM mating_request WHERE REQ_DID=%s AND REC_DID=%s", (
+                    int(id), dogid
+                )
+            )
+            mysql.connection.commit()
+            cur.close()
+            return redirect("/mydog/"+dogid+"/requests")
+
+        return redirect("/home")
+
+
+@app.route('/mydog/<dogid>/scheduled', methods=['GET', 'POST'])
+@flask_login.login_required
+def scheduledRequest(dogid):
+    if request.method == 'GET':
+        avatSrc = session['avatSrc']
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM dog WHERE DID = %s", (
+                dogid,
+            )
+        )
+        result = cur.fetchone()
+        dogSrc = result[5]
+        print(result[6])
+        cur.close()
+
+        if session['uid'] == result[6]:
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "SELECT * FROM dog d INNER JOIN mating_request m ON d.DID = m.REQ_DID INNER JOIN traits t ON t.TID = d.TID WHERE REC_DID = %s and scheduled=TRUE", (
+                    dogid,
+                )
+            )
+            requests = cur.fetchall()
+            traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
+                          'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
+            cur.close()
+            return render_template('scheduledrequest.html', currentAvatar=avatSrc, dogData=result, dogImg=dogSrc, requestsData=requests, traits=traitNames)
+        else:
+            return redirect("/home")
+
+    if request.method == 'POST':
+        requestData = request.form
+        id = requestData['id']
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "DELETE FROM mating_request WHERE REQ_DID=%s AND REC_DID=%s", (
+                int(id), dogid
             )
         )
         mysql.connection.commit()
         cur.close()
-        return redirect('/explore')
+        return redirect("/mydog/"+dogid+"/scheduled")
 
 
 @app.route('/logout')

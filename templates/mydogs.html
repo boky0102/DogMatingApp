@@ -1,0 +1,35 @@
+{% extends 'home.html' %}
+{% set active_page = "requests" %}
+
+{% block content %}
+
+<div class="card-wrap">
+    {% if dogs != None %}
+        {% for dog in dogs %}
+            
+                <div class="card">
+                    <a  href="/mydog/{{ dog[0] }}/requests">
+                        <div class="card-image-area">
+                            <img src="{{ dog[5] }}" class="card-image"/>
+                        </div>
+                        <div class="card-text-wrapper">
+                            <div class="card-title-area">
+                                <p class="card-p">{{ dog[1] }}</p>
+                            </div>
+                            <div class="card-description-area">
+                                <p class="card-p">{{ dog[4] }}</p>
+                            </div>
+                            <div class="card-date-area">
+                                <p class="card-p">Birth date: {{ dog[2] }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            
+        {% endfor %}
+    {% endif %}
+
+    
+</div>
+
+{% endblock %}

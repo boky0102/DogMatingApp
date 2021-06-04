@@ -7,6 +7,9 @@
 
         <div id="dog-area">
             <div id="dog-picture">
+                <div id="back-btn-img-container" onclick="goBack()">
+                    <img id="back-btn-img" src="/static/images/back.svg"/>
+                </div>
                 <img id="dog-picture-large" src="{{ dogImg }}">
             </div>
             <div>
@@ -25,7 +28,7 @@
                 <p class="p-dog-card">Birthday:  {{ dog[2] }}</p>
             </div>
             <div>
-                <table id="static-traits">
+                <table class="static-traits">
                     {% for m in range(9) %}
                     <tr>
                         <td class="trait-column"><p class="p-form p-dog-card">{{ traits[m] }}</p></td>
@@ -63,9 +66,19 @@
                         <button class="btn" id="mating-req-btn" type="submit">
                             SEND REQUEST
                         </button>
+                        
                     </div>
                 </form>
             </div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            
+                <p class="p-dog-card dog-card-label">
+                {{ messages[0] }}
+                </p>
+            
+            {% endif %}
+            {% endwith %}
         </div>
 
     </div>
@@ -94,5 +107,10 @@
 
         
     </div>
+    <script>
+        function goBack(){
+            window.history.back();
+        }
+    </script>
 
 {% endblock %}

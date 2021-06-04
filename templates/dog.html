@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+{% set active_page = "" %}
+
+{% block content %}
+
+    <div id="dog-wrap">
+        <div id="left-card">
+            <div id="image-part">
+                <img id="left-part-img" src="{{ dogImg }}"/>
+            </div>
+            <a href="/mydog/{{ dogData[0] }}/requests" class="a-dog-nav" ><div class="dog-nav-btn" id="{{ 'request-nav-active-elem' if active_request == 'requests' else '' }}">Mating requests</div></a>
+            <a href="/mydog/{{ dogData[0] }}/scheduled" class="a-dog-nav"><div class="dog-nav-btn dog-nav-bottom-btn" id="{{ 'request-nav-active-elem' if active_request == 'scheduled' else '' }}">Scheduled mating</div></a>
+        </div>
+        <div id="request-wrap">
+            {% block requests %}
+
+            {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}
