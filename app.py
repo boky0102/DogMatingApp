@@ -3,6 +3,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import flash
+import flask
 from werkzeug.utils import redirect
 import yaml
 from flask_mysqldb import MySQL
@@ -363,7 +364,7 @@ def getDog(dogid):
 
         cur = mysql.connection.cursor()
         cur.execute(
-            "SELECT d.name, d.description, d.birth_day, d.species, d.avatar_src, u.username, u.img_src, d.gender, t.playful, t.curious, t.social, t.aggressive, t.demanding, t.dominant, t.protective, t.apartment, t.vocal FROM dog d INNER JOIN user u ON d.UID = u.UID INNER JOIN traits t ON  d.TID = t.TID WHERE d.DID = %s", (
+            "SELECT d.name, d.description, d.birth_day, d.species, d.avatar_src, u.username, u.img_src, d.gender, t.playful, t.curious, t.social, t.aggressive, t.demanding, t.dominant, t.protective, t.apartment, t.vocal, d.uid FROM dog d INNER JOIN user u ON d.UID = u.UID INNER JOIN traits t ON  d.TID = t.TID WHERE d.DID = %s", (
                 dogid,)
         )
         result = cur.fetchone()
@@ -553,6 +554,36 @@ def scheduledRequest(dogid):
         mysql.connection.commit()
         cur.close()
         return redirect("/mydog/"+dogid+"/scheduled")
+
+
+@app.route('/user/<userid>', methods=['GET'])
+@flask_login.login_required
+def userProfile(userid):
+    if request.method == 'GET':
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT u.UID, u.username, u.img_src, a.street_and_num, a.city, a.country FROM user u INNER JOIN address a ON u.AID=a.AID WHERE UID=%s", (
+                userid,
+            )
+        )
+        result = cur.fetchone()
+        cur.close()
+        print(result)
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM dog d INNER JOIN traits t ON d.TID=t.TID WHERE d.UID=%s", (
+                userid,
+            )
+        )
+        dogData = cur.fetchall()
+        cur.close()
+        print(dogData)
+        traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
+                      'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
+
+        return render_template('userprofile.html', currentAvatar=session['avatSrc'], userData=result, dogs=dogData, traits=traitNames)
 
 
 @app.route('/logout')

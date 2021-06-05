@@ -1,0 +1,71 @@
+{% extends 'home.html' %}
+{% set active_page = "" %}
+
+{% block content %}
+
+    <div id="userprofile-wrap">
+
+        <div id="user-profile-card">
+            <div id="avatar-holder">
+                <img class="user-profile-image" src="{{userData[2]}}" />
+            </div>
+            <div id="name-holder">
+                <p class="user-profile-p">{{ userData[1] }}</p>
+            </div>
+            <div id="country-city-holder">
+                <p class="user-profile-p">{{ userData[4] }}, {{ userData[5] }}</p>
+            </div>
+        </div>
+        <div id="user-dogs-wrap">
+            <div>
+                {% for dog in dogs %}
+            <div class="request-card">
+                <a href="/dog/{{ dog[0] }}" id="request-card-info-part">
+                    <div class="request-card-info-wrap">
+                        <div class="request-card-image-container">
+                            <img class="request-card-image" src="{{ dog[5] }}">
+                        </div>
+                        <div class="request-card-info">
+                            <p class="p-form">{{ dog[1] }}</p>
+                        </div>
+                        <div class="request-card-info">
+                            <p class="p-form">{{ dog[3] }}</p>
+                        </div>
+                        <div class="request-card-info">
+                            <p class="p-form">{{ dog[2] }}</p>
+                        </div>
+                    </div>
+                    <div class="request-traits">
+                        <table >
+                            {% for m in range(9) %}
+                            <tr >
+                                <td class="traits-column">{{ traits[m] }}</td>
+                                <td>
+                                    <div class="rating-box-wrap">
+                                        {% for n in range(10) %}
+        
+                                            {% if n <= dog[m+10] %}
+                                                <div class="rating-box-range rating-box-smaller">
+                                                </div>
+                                            {% else %}
+                                                <div class="rating-box-not-range rating-box-smaller"></div>
+                                            {% endif %}
+        
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </a>
+               
+
+            </div>
+        {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
