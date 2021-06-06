@@ -1,0 +1,35 @@
+:root {
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
+    --glass: rgba(255,255,255, 0.4);
+    --glass2: rgba(255,255,255, 0.3);
+    --font: 'Fredoka One', cursive;
+}
+
+#inbox-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#messanger-wrap{
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+    border: 2px solid var(--light);
+    height: 700px;
+}
+
+#conversations-wrap{
+    height: 100%;
+    background-color: blue;
+    width: 30%;
+}
+
+#conversation-header{
+    height: 60px;
+    background-color: var(--light);
+}

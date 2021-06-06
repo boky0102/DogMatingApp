@@ -586,6 +586,75 @@ def userProfile(userid):
         return render_template('userprofile.html', currentAvatar=session['avatSrc'], userData=result, dogs=dogData, traits=traitNames)
 
 
+@app.route('/inbox', methods=['GET'])
+@flask_login.login_required
+def inbox():
+    return render_template('inbox.html', currentAvatar=session['avatSrc'])
+
+
+@app.route('/message', methods=['POST'])
+@flask_login.login_required
+def message():
+    if request.method == 'POST':
+        messageData = request.form
+        message = messageData['message']
+        recUser = messageData['recievingUser']
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT CID FROM conversation WHERE UID_ONE=%s AND UID_TWO=%s OR UID_ONE=%s AND UID_TWO=%s", (
+                session['uid'], recUser, recUser, session['uid']
+            )
+        )
+        result = cur.fetchone()
+        cur.close()
+        if result is None:
+
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "INSERT INTO conversation(UID_ONE,UID_TWO) VALUES (%s,%s)", (
+                    session['uid'], recUser
+                )
+            )
+            mysql.connection.commit()
+            cur.close()
+
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "SELECT CID FROM conversation WHERE UID_ONE=%s AND UID_TWO=%s OR UID_ONE=%s AND UID_TWO=%s", (
+                    session['uid'], recUser, recUser, session['uid'])
+            )
+            result = cur.fetchone()
+            cur.close()
+
+            time = datetime.now()
+            dt_string = time.strftime("%Y-%m-%d %H:%M:%S")
+
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "INSERT INTO message(CID, message, sent_by, date_created) VALUES (%s,%s,%s,%s)", (
+                    result[0], message, session['uid'], dt_string
+                )
+            )
+            mysql.connection.commit()
+            cur.close()
+
+        else:
+            time = datetime.now()
+            dt_string = time.strftime("%Y-%m-%d %H:%M:%S")
+
+            cur = mysql.connection.cursor()
+            cur.execute(
+                "INSERT INTO message(CID, message, sent_by, date_created) VALUES (%s,%s,%s,%s)", (
+                    result[0], message, session['uid'], dt_string
+                )
+            )
+            mysql.connection.commit()
+            cur.close()
+
+        return redirect("/home")
+
+
 @app.route('/logout')
 def logout():
     flask_login.logout_user()

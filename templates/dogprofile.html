@@ -97,7 +97,7 @@
             </div>
             <div id="buttons-wrap">
                 <a>
-                    <button class="user-card-btn">
+                    <button id="contact" class="user-card-btn">
                         <p class="p-form">CONTACT</p>                
                     </button>
                 </a>
@@ -111,10 +111,21 @@
 
         
     </div>
-    <script>
-        function goBack(){
-            window.history.back();
-        }
-    </script>
+
+    <div class="modal-background" id="mod-backg">
+        <div class="modal" id="modal">
+            <form method="POST" action="/message">
+                <div id="modal-header">
+                    <label for="message" class="p-dog-card">Message</label>
+                    <div ><img id="close-icon" src="/static/images/close.svg" /></div>
+                </div>
+                <input class="hidden-input" name="recievingUser" value="{{ dog[17] }}" />
+                <textarea name="message" class="input-form modal-textarea" rows="3"></textarea>
+                <button type="submit" class="btn btn-sec">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='scripts/dogprofile.js')}}"></script>
 
 {% endblock %}
