@@ -7,11 +7,24 @@
     <div id="messanger-wrap">
         <div id="conversations-wrap">
             <div id="conversation-header">
-
+                CONVERSATIONS
             </div>
+            {% for conversation in conversations %}
+            <a class="conversation-card" href="/inbox/conversation/{{ conversation[4] }}">
+                <div class="con-img-wrap">
+                    <img class="con-card-img" src="{{ conversation[1] }}" />
+                </div>
+                <div class="con-info-wrap">
+                    <p class="con-p">{{ conversation[2] }}</p>
+                    <p class="con-p">{{ conversation[3] }}</p>
+                </div>
+            </a>
+            {% endfor %}
         </div>
         <div id="current-conversation">
-
+            {% block conversation %}
+            
+            {% endblock %}
         </div>
     </div>
 </div>

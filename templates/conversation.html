@@ -1,0 +1,20 @@
+{% extends 'inbox.html' %}
+{% set active_conversation = "con-1" %}
+
+{% block conversation %}
+
+    <div id="messages">
+        
+    </div>
+    <form method="POST">
+        <div id="new-message-wrap">
+            
+                <textarea id="new-message-input" rows="2"></textarea>
+                <button class="btn btn-sec" type="submit">Send</button>
+            
+        </div>
+    </form>
+
+    <script src="{{url_for('static', filename='scripts/chat.js')}}"></script>
+
+{% endblock %}

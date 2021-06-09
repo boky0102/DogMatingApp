@@ -1,9 +1,11 @@
 import os
+import json
 from flask import Flask
 from flask import render_template
 from flask import request
 from flask import flash
 import flask
+from flask import jsonify
 from werkzeug.utils import redirect
 import yaml
 from flask_mysqldb import MySQL
@@ -589,7 +591,20 @@ def userProfile(userid):
 @app.route('/inbox', methods=['GET'])
 @flask_login.login_required
 def inbox():
-    return render_template('inbox.html', currentAvatar=session['avatSrc'])
+
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "SELECT u.uid,u.img_src, u.username, m.message, c.CID FROM user u INNER JOIN conversation c ON c.UID_ONE = u.UID OR c.UID_TWO = u.UID INNER JOIN message m ON c.CID = m.CID WHERE c.UID_ONE = %s OR c.UID_TWO = %s GROUP BY u.UID ORDER BY m.date_created desc", (
+            session['uid'], session['uid']
+        )
+    )
+    results = cur.fetchall()
+    filteredlist = []
+    for result in results:
+        if result[0] != session['uid']:
+            filteredlist.append(result)
+    print(filteredlist)
+    return render_template('inbox.html', currentAvatar=session['avatSrc'], conversations=filteredlist)
 
 
 @app.route('/message', methods=['POST'])
@@ -607,6 +622,7 @@ def message():
             )
         )
         result = cur.fetchone()
+        conid = result[0]
         cur.close()
         if result is None:
 
@@ -625,6 +641,7 @@ def message():
                     session['uid'], recUser, recUser, session['uid'])
             )
             result = cur.fetchone()
+            conid = result[0]
             cur.close()
 
             time = datetime.now()
@@ -652,7 +669,63 @@ def message():
             mysql.connection.commit()
             cur.close()
 
-        return redirect("/home")
+        return redirect("/inbox/conversation/"+str(conid))
+
+
+@app.route('/inbox/conversation/<conid>')
+@flask_login.login_required
+def conversation(conid):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "SELECT u.uid,u.img_src, u.username, m.message, c.CID FROM user u INNER JOIN conversation c ON c.UID_ONE = u.UID OR c.UID_TWO = u.UID INNER JOIN message m ON c.CID = m.CID WHERE c.UID_ONE = %s OR c.UID_TWO = %s GROUP BY u.UID ORDER BY m.date_created desc", (
+            session['uid'], session['uid']
+        )
+    )
+    results = cur.fetchall()
+    filteredlist = []
+    for result in results:
+        if result[0] != session['uid']:
+            filteredlist.append(result)
+    print(filteredlist)
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "SELECT * FROM message WHERE CID = %s ORDER BY date_created asc", (
+            conid,
+        )
+    )
+    result = cur.fetchall()
+    cur.close()
+    return render_template('conversation.html', currentAvatar=session['avatSrc'], conversations=filteredlist, recieverAvatar=filteredlist[0][1])
+
+
+@app.route('/<conid>/chat', methods=['GET'])
+@flask_login.login_required
+def chat(conid):
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "SELECT sent_by, message FROM message WHERE CID = %s ORDER BY date_created asc", (
+            conid,
+        )
+    )
+    results = cur.fetchall()
+    arrangedResponse = []
+    for result in results:
+        if result[0] == session['uid']:
+            dict = {
+                "sent_by": result[0],
+                "message": result[1],
+                "type": "holder"
+            }
+            arrangedResponse.append(dict)
+        else:
+            dict = {
+                "sent_by": result[0],
+                "message": result[1],
+                "type": "nonholder"
+            }
+            arrangedResponse.append(dict)
+
+    return json.dumps(arrangedResponse)
 
 
 @app.route('/logout')
