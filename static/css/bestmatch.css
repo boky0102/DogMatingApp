@@ -1,0 +1,62 @@
+:root {
+    --primary: #8C1C13;
+    --light: #E7D7C1;
+    --dark: #110B11;
+    --secondary: #BF4342;
+    --glass: rgba(255,255,255, 0.4);
+    --glass2: rgba(255,255,255, 0.3);
+    --font: 'Fredoka One', cursive;
+}
+
+
+#match-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#match-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#match-dog-select{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#match-dog-form{
+    width: 40%;
+}
+
+#dogs-wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#your-dog{
+    border: 1px solid var(--light);
+    width:  30%;
+    height: 400px;
+}
+
+#next-button{
+    margin-left: 20px;
+}
+
+#matching-dog{
+    border: 1px solid var(--light);
+    width:  30%;
+    height: 400px;
+}

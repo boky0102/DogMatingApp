@@ -96,6 +96,18 @@ def allowed_image(filename):
 # LANDING PAGE ROUTE
 
 
+def similarityIndex(currentDog, dog2):
+    totalDiff = 0
+    for i in range(11, 19):
+        totalDiff += abs(currentDog[i] - dog2[i])
+    totalDiff = totalDiff/9
+    return totalDiff
+
+
+def sortFunct(dog):
+    return dog[19]
+
+
 @app.route("/", methods=['GET', 'POST'])
 def landing():
     if request.method == 'POST':
@@ -672,30 +684,49 @@ def message():
         return redirect("/inbox/conversation/"+str(conid))
 
 
-@app.route('/inbox/conversation/<conid>')
+@app.route('/inbox/conversation/<conid>', methods=['GET', 'POST'])
 @flask_login.login_required
 def conversation(conid):
-    cur = mysql.connection.cursor()
-    cur.execute(
-        "SELECT u.uid,u.img_src, u.username, m.message, c.CID FROM user u INNER JOIN conversation c ON c.UID_ONE = u.UID OR c.UID_TWO = u.UID INNER JOIN message m ON c.CID = m.CID WHERE c.UID_ONE = %s OR c.UID_TWO = %s GROUP BY u.UID ORDER BY m.date_created desc", (
-            session['uid'], session['uid']
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT u.uid,u.img_src, u.username, m.message, c.CID FROM user u INNER JOIN conversation c ON c.UID_ONE = u.UID OR c.UID_TWO = u.UID INNER JOIN message m ON c.CID = m.CID WHERE c.UID_ONE = %s OR c.UID_TWO = %s GROUP BY u.UID ORDER BY m.date_created desc", (
+                session['uid'], session['uid']
+            )
         )
-    )
-    results = cur.fetchall()
-    filteredlist = []
-    for result in results:
-        if result[0] != session['uid']:
-            filteredlist.append(result)
-    print(filteredlist)
-    cur = mysql.connection.cursor()
-    cur.execute(
-        "SELECT * FROM message WHERE CID = %s ORDER BY date_created asc", (
-            conid,
+        results = cur.fetchall()
+        filteredlist = []
+        for result in results:
+            if result[0] != session['uid']:
+                filteredlist.append(result)
+        print(filteredlist)
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM message WHERE CID = %s ORDER BY date_created asc", (
+                conid,
+            )
         )
-    )
-    result = cur.fetchall()
-    cur.close()
-    return render_template('conversation.html', currentAvatar=session['avatSrc'], conversations=filteredlist, recieverAvatar=filteredlist[0][1])
+        result = cur.fetchall()
+        cur.close()
+        return render_template('conversation.html', currentAvatar=session['avatSrc'], conversations=filteredlist, recieverAvatar=filteredlist[0][1])
+
+    if request.method == 'POST':
+
+        messageData = request.form
+        message = messageData['message']
+        time = datetime.now()
+        dt_string = time.strftime("%Y-%m-%d %H:%M:%S")
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "INSERT INTO message(CID, message, sent_by, date_created) VALUES(%s, %s, %s, %s)", (
+                conid, message, session['uid'], dt_string
+            )
+        )
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect('/inbox/conversation/'+conid)
 
 
 @app.route('/<conid>/chat', methods=['GET'])
@@ -708,27 +739,108 @@ def chat(conid):
         )
     )
     results = cur.fetchall()
+    cur.close()
+
     arrangedResponse = []
+    secondAvat = ""
     for result in results:
         if result[0] == session['uid']:
             dict = {
                 "sent_by": result[0],
                 "message": result[1],
-                "type": "holder"
+                "type": "holder",
+                "avat": session['avatSrc']
             }
             arrangedResponse.append(dict)
         else:
-            dict = {
-                "sent_by": result[0],
-                "message": result[1],
-                "type": "nonholder"
-            }
-            arrangedResponse.append(dict)
+
+            if secondAvat == "":
+                cur = mysql.connection.cursor()
+                cur.execute(
+                    "SELECT img_src FROM user WHERE UID = %s", (
+                        result[0],
+                    )
+                )
+                secondUID = cur.fetchone()
+                secondAvat = secondUID[0]
+
+                dict = {
+                    "sent_by": result[0],
+                    "message": result[1],
+                    "type": "nonholder",
+                    "avat": secondAvat
+                }
+                arrangedResponse.append(dict)
+
+            else:
+                dict = {
+                    "sent_by": result[0],
+                    "message": result[1],
+                    "type": "nonholder",
+                    "avat": secondAvat
+                }
+                arrangedResponse.append(dict)
 
     return json.dumps(arrangedResponse)
 
 
-@app.route('/logout')
+@app.route('/best-match', methods=['GET', 'POST'])
+@flask_login.login_required
+def bestMatch():
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT name from dog WHERE UID = %s", (
+                session['uid'],
+            )
+        )
+        mydogs = cur.fetchall()
+        print(mydogs)
+
+        return render_template('bestmatch.html', currentAvatar=session['avatSrc'], ownerDogs=mydogs)
+
+    if request.method == 'POST':
+        formData = request.form
+        currentDog = formData['choosenDog']
+
+        return redirect('/best-match/' + currentDog)
+
+
+@app.route('/best-match/<dogname>', methods=['GET'])
+@flask_login.login_required
+def match(dogname):
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM dog d INNER JOIN traits t ON t.TID = d.TID WHERE name = %s", (
+                dogname,
+            )
+        )
+        ownerdog = cur.fetchone()
+        cur.close()
+
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM dog d INNER JOIN traits t ON d.TID = t.TID WHERE d.name != %s", (
+                dogname,
+            )
+        )
+        allDogs = cur.fetchall()
+
+        doglist = []
+
+        for dog in allDogs:
+            tup = (similarityIndex(ownerdog, dog))
+            difftuple = dog + (tup,)
+            doglist.append(difftuple)
+
+        doglist.sort(key=sortFunct)
+        print(doglist)
+
+        return render_template('bestmatch.html', currentAvatar=session['avatSrc'], currentDog=ownerdog, matches=doglist)
+
+
+@ app.route('/logout')
 def logout():
     flask_login.logout_user()
     return redirect("/")
