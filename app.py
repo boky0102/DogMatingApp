@@ -806,10 +806,20 @@ def bestMatch():
         return redirect('/best-match/' + currentDog)
 
 
-@app.route('/best-match/<dogname>', methods=['GET'])
+@app.route('/best-match/<dogname>', methods=['GET', 'POST'])
 @flask_login.login_required
 def match(dogname):
     if request.method == 'GET':
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT name from dog WHERE UID = %s", (
+                session['uid'],
+            )
+        )
+        mydogs = cur.fetchall()
+        print(mydogs)
+        cur.close()
+
         cur = mysql.connection.cursor()
         cur.execute(
             "SELECT * FROM dog d INNER JOIN traits t ON t.TID = d.TID WHERE name = %s", (
@@ -821,8 +831,8 @@ def match(dogname):
 
         cur = mysql.connection.cursor()
         cur.execute(
-            "SELECT * FROM dog d INNER JOIN traits t ON d.TID = t.TID WHERE d.name != %s", (
-                dogname,
+            "SELECT * FROM dog d INNER JOIN traits t ON d.TID = t.TID WHERE d.name != %s AND gender != %s", (
+                dogname, ownerdog[8]
             )
         )
         allDogs = cur.fetchall()
@@ -836,8 +846,16 @@ def match(dogname):
 
         doglist.sort(key=sortFunct)
         print(doglist)
+        traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
+                      'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
 
-        return render_template('bestmatch.html', currentAvatar=session['avatSrc'], currentDog=ownerdog, matches=doglist)
+        return render_template('bestmatch.html', currentAvatar=session['avatSrc'], currentDog=ownerdog, matches=doglist, traits=traitNames, ownerDogs=mydogs)
+
+    if request.method == 'POST':
+        formData = request.form
+        currentDog = formData['choosenDog']
+
+        return redirect('/best-match/' + currentDog)
 
 
 @ app.route('/logout')

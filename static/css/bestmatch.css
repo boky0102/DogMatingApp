@@ -48,15 +48,73 @@
 #your-dog{
     border: 1px solid var(--light);
     width:  30%;
-    height: 400px;
+    height: 700px;
+    background-color: var(--primary);
+    border-radius: 15px;
 }
 
 #next-button{
     margin-left: 20px;
 }
 
-#matching-dog{
+.matching-dog{
     border: 1px solid var(--light);
     width:  30%;
-    height: 400px;
+    height: 700px;
+    background-color: var(--primary);
+    border-radius: 15px;
+}
+
+.matching-wrap{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.image-container{
+    border-bottom: 1px solid var(--light);
+    height: 45%;
+}
+
+.image-dog{
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    object-fit: cover;
+}
+
+.name-container{
+    display: flex;
+    justify-content: center;
+}
+
+.breed-container{
+    display: flex;
+    justify-content: center;
+}
+
+.birth-container{
+    display: flex;
+    justify-content: center;
+}
+
+.traits-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inactive{
+    display: none;
+}
+
+.active{
+    display: block;
+    transition: all 0.3s ease-in-out;
+}
+
+.active:hover{
+    background-color: var(--secondary);
+    cursor: pointer;
 }

@@ -22,16 +22,141 @@
             </form>
             <div id="dogs-wrap">
                 <div id="your-dog">
-
+                    {% if currentDog != undefined %}
+                        <div class = "matching-wrap" >
+                            <div class="image-container">
+                                <img class="image-dog" src="{{ currentDog[5] }}" />
+                            </div>
+                            <div class="name-container">
+                                <p class="p-form">{{ currentDog[1] }}</p>
+                            </div>
+                            <div class="breed-container">
+                                <p class="p-form">{{ currentDog[3] }}</p>
+                            </div>
+                            <div class="birth-container">
+                                <p class="p-form">{{ currentDog[2] }}</p>
+                            </div>
+                            <div class="traits-wrap">
+                                <table >
+                                {% for m in range(9) %}
+                                <tr >
+                                    <td class="traits-column">{{ traits[m] }}</td>
+                                    <td>
+                                        <div class="rating-box-wrap">
+                                            {% for n in range(10) %}
+            
+                                                {% if n <= currentDog[m+10] %}
+                                                    <div class="rating-box-range rating-box-smaller">
+                                                    </div>
+                                                {% else %}
+                                                    <div class="rating-box-not-range rating-box-smaller"></div>
+                                                {% endif %}
+            
+                                            {% endfor %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        
+                    {% endif %}
                 </div>
+
+                
                 <div id="next-button">
-                        <button class="btn btn-sec">Find next</button>
+                        <button class="btn btn-sec" onclick="findNext()">Find next</button>
                 </div>
-                <div id="matching-dog">
-
+                {% if matches != undefined %}
+                {% for dog in matches  %}
+                {% if loop.index0 == 0 %}
+                <div class="matching-dog active shown" id="{{ dog[0] }}">
+                    <div class="image-container">
+                        <img class="image-dog" src="{{ dog[5] }}" />
+                    </div>
+                    <div class="name-container">
+                        <p class="p-form">{{ dog[1] }}</p>
+                    </div>
+                    <div class="breed-container">
+                        <p class="p-form">{{ dog[3] }}</p>
+                    </div>
+                    <div class="birth-container">
+                        <p class="p-form">{{ dog[2] }}</p>
+                    </div>
+                    <div class="traits-wrap">
+                        <table >
+                        {% for m in range(9) %}
+                        <tr >
+                            <td class="traits-column">{{ traits[m] }}</td>
+                            <td>
+                                <div class="rating-box-wrap">
+                                    {% for n in range(10) %}
+    
+                                        {% if n <= dog[m+10] %}
+                                            <div class="rating-box-range rating-box-smaller">
+                                            </div>
+                                        {% else %}
+                                            <div class="rating-box-not-range rating-box-smaller"></div>
+                                        {% endif %}
+    
+                                    {% endfor %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </table>
+                    </div>
                 </div>
+                
+                {% else %}
+                <div class="matching-dog inactive notshown" id="{{ dog[0] }}">
+                
+                    
+                            <div class="image-container">
+                                <img class="image-dog" src="{{ dog[5] }}" />
+                            </div>
+                            <div class="name-container">
+                                <p class="p-form">{{ dog[1] }}</p>
+                            </div>
+                            <div class="breed-container">
+                                <p class="p-form">{{ dog[3] }}</p>
+                            </div>
+                            <div class="birth-container">
+                                <p class="p-form">{{ dog[2] }}</p>
+                            </div>
+                            <div class="traits-wrap">
+                                <table >
+                                {% for m in range(9) %}
+                                <tr >
+                                    <td class="traits-column">{{ traits[m] }}</td>
+                                    <td>
+                                        <div class="rating-box-wrap">
+                                            {% for n in range(10) %}
+            
+                                                {% if n <= dog[m+10] %}
+                                                    <div class="rating-box-range rating-box-smaller">
+                                                    </div>
+                                                {% else %}
+                                                    <div class="rating-box-not-range rating-box-smaller"></div>
+                                                {% endif %}
+            
+                                            {% endfor %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        
+                
+                {% endif %}
+                {% endfor %}
+                {% endif %}
             </div>
         </div>
 
     </div>
+    <script src="{{url_for('static', filename='scripts/match.js')}}"></script>
 {% endblock %}
