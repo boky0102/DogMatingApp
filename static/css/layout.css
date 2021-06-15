@@ -119,14 +119,20 @@ p{
     object-fit: cover;
 }
 
+.mobile-navbar-icon{
+    display: none;
+}
+
 @media screen and (max-width: 1000px){
     #sidebar{
         width: 100%;
-        height: 50px;
+        height: 60px;
         background-color: var(--primary);
         display: flex;
         flex-direction: row;
         text-decoration: none;
+        justify-content: center;
+        align-items: center;
     }
 
     #layout-wrapper{
@@ -147,5 +153,43 @@ p{
         width: 100%;
     }
     
+    .mobile-navbar-icon{
+        display: block;
+        margin: 0px 10px;
+    }
 
+    .svg-icon{
+        width: 40px;
+        height: 40px;
+    }
+
+    .svg-icon-two{
+        width: 60px;
+        height: 60px;
+    }
+
+    #sidebar-items-wrapper{
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        
+    }
+
+    .mobile-nav-wrap{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        
+        align-items: center;
+        
+    }
+    #btn-div{
+        display: none;
+    }
+
+    #logOut-btn{
+        height: 60%;
+    }
 }
+
