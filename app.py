@@ -24,7 +24,7 @@ app = Flask(__name__)
 
 
 app.config['MYSQL_HOST'] = os.environ.get('mysql_host')
-app.config['MYSQL_PORT'] = os.environ.get('mysql_port')
+app.config['MYSQL_PORT'] = int(os.environ.get('mysql_port'))
 app.config['MYSQL_USER'] = os.environ.get('mysql_user')
 app.config['MYSQL_PASSWORD'] = os.environ.get('mysql_password')
 app.config['MYSQL_DB'] = os.environ.get('mysql_db')
