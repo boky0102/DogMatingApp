@@ -204,18 +204,28 @@ def addPuppy():
             if allowed_image(img.filename):
                 time = datetime.now()
                 dt_string = time.strftime("%d-%m-%Y%H-%M-%S")
-                img.save(os.path.join(
-                    app.config['IMAGE_UPLOADS'], img.filename))
+                filename = str(img.filename)
+                
+                source = UPLOAD_FOLDER + "/" + filename
+                
+
+                basewidth = 600
+                imag = Image.open(img)
+                print(imag)
+                wpercent = (basewidth/float(imag.size[0]))
+                hsize = int((float(imag.size[1] * float(wpercent))))
+                imag = imag.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+                print(imag)
+                imag.save(os.path.join(
+                    app.config['IMAGE_UPLOADS'], img.filename
+                ))
+
+                time = datetime.now()
+                dt_string = time.strftime("%d-%m-%Y%H-%M-%S")
 
                 filename = str(img.filename)
-                extension = filename.split(".")
-                name = dateOfBirth + dt_string
-                extension = str(extension[1])
-
                 source = UPLOAD_FOLDER + "/" + filename
-                renamed = UPLOAD_FOLDER + "/" + name + "." + extension
-                os.rename(source, renamed)
-                imgSrc = renamed
+                imgSrc = source
 
             else:
                 return redirect("/add-puppy")
