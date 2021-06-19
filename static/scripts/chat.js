@@ -3,7 +3,7 @@
 function getMessages(){
     url = window.location.href;
     currentConID = url.split('/')[5];
-    fetch("http://127.0.0.1:5000/"+currentConID+"/chat").then( res => res.json())
+    fetch("https://dog-mating-app-eeojj.ondigitalocean.app/"+currentConID+"/chat").then( res => res.json())
     .then((data) => {
 
         const messages = document.querySelectorAll(".message-wrap")

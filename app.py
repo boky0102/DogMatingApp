@@ -667,8 +667,10 @@ def message():
             )
         )
         result = cur.fetchone()
-        conid = result[0]
-        cur.close()
+        if result is not None:
+            conid = result[0]
+            cur.close()
+        
         if result is None:
 
             cur = mysql.connection.cursor()
