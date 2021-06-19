@@ -8,7 +8,8 @@ import flask
 from flask import jsonify
 from werkzeug.utils import redirect
 import yaml
-import Image
+import PIL
+from PIL import Image
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
 import flask_login
@@ -21,18 +22,21 @@ from random import randint
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = os.environ.get('mysql_host')
-app.config['MYSQL_PORT'] = int(os.environ.get('mysql_port'))
-app.config['MYSQL_USER'] = os.environ.get('mysql_user')
-app.config['MYSQL_PASSWORD'] = os.environ.get('mysql_password')
-app.config['MYSQL_DB'] = os.environ.get('mysql_db')
+# DB congig
+
+db = yaml.load(open('db.yaml'), Loader=yaml.FullLoader)
+app.config['MYSQL_HOST'] = db['mysql_host']
+app.config['MYSQL_PORT'] = db['mysql_port']
+app.config['MYSQL_USER'] = db['mysql_user']
+app.config['MYSQL_PASSWORD'] = db['mysql_password']
+app.config['MYSQL_DB'] = db['mysql_db']
 mysql = MySQL(app)
 
 # APP SECRET KEY CONFIG
 
-app.secret_key = os.environ.get('SECRET_KEY')
+secret = yaml.load(open('appcfg.yaml'), Loader=yaml.FullLoader)
+app.secret_key = secret['SECRET_KEY']
 app.config['SESSION_TYPE'] = 'filesystem'
-# BCRYPT CONFIG
 
 
 
