@@ -22,8 +22,6 @@ from random import randint
 
 app = Flask(__name__)
 
-# DB congig
-
 app.config['MYSQL_HOST'] = os.environ.get('mysql_host')
 app.config['MYSQL_PORT'] = int(os.environ.get('mysql_port'))
 app.config['MYSQL_USER'] = os.environ.get('mysql_user')
@@ -36,6 +34,8 @@ mysql = MySQL(app)
 app.secret_key = os.environ.get('SECRET_KEY')
 app.config['SESSION_TYPE'] = 'filesystem'
 # BCRYPT CONFIG
+
+
 
 bcrypt = Bcrypt(app)
 
@@ -275,19 +275,14 @@ def profile():
             if allowed_image(img.filename):
                 time = datetime.now()
                 dt_string = time.strftime("%d-%m-%Y%H-%M-%S")
-                img.save(os.path.join(
-                    app.config['IMAGE_UPLOADS'], img.filename))
                 filename = str(img.filename)
-                extension = filename.split(".")
-                name = username + dt_string
-                extension = str(extension[1])
+                
                 source = UPLOAD_FOLDER + "/" + filename
-                renamed = UPLOAD_FOLDER + "/" + name + "." + extension
-                os.rename(source, renamed)
-                imgSrc = renamed
+                
 
                 basewidth = 300
-                imag = Image.open(imgSrc)
+                imag = Image.open(img)
+                print(imag)
                 wpercent = (basewidth/float(imag.size[0]))
                 hsize = int((float(imag.size[1] * float(wpercent))))
                 imag = imag.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
