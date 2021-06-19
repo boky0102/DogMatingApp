@@ -8,8 +8,7 @@ import flask
 from flask import jsonify
 from werkzeug.utils import redirect
 import yaml
-from PIL import Image
-import PIL
+import Image
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
 import flask_login
