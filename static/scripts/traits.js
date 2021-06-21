@@ -86,7 +86,6 @@ listOfTraits.forEach((currentRow) => {
         currId = box.id.split("-")[1];
         const currentValue = document.getElementById(currentRow + "-input");
         currentValue.value = currId;
-        console.log(checked);
         for(var j=1; j < 11; j++){
             var curBox = document.getElementById(currentRow + "-" + j);
             if(j <= currId){

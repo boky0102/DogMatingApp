@@ -1,7 +1,6 @@
 
 
 function handleAcceptClick(clickedID){
-    console.log(clickedID);
     const values = clickedID.split("-");
     idElem = document.getElementById("curId");
     typeElem = document.getElementById("requestType")

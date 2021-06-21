@@ -24,6 +24,7 @@
         
     </head>
     <body>
+        
         <div id="layout-wrapper">
             <div id="sidebar">
                 <div class="avatar">
@@ -40,22 +41,39 @@
                     <a href="/requests" id="{{ 'sidebar-active-elem' if active_page == 'requests' else '' }}" class="sidebar-elem"><p class="text-in-nav">My dogs</p></a>
                     <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="sidebar-elem"><p class="text-in-nav">Inbox</p></a>
                     <div class="mobile-nav-wrap">
-                        <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src ="/static/images/adddog.svg"/></a>
-                        <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src="/static/images/dogprofile.svg"/></a>
-                        <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon-two" src="/static/images/twodogs.svg"/></a>
-                        <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src="/static/images/profile.svg"/></a>
-                        <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src="/static/images/explore.svg"/></a>
-                        <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src="/static/images/inbox.svg"/></a>
-                        
+                        <div id="hamburger">
+                            <div class="ham-span" id="ham-1"></div>
+                            <div class="ham-span" id="ham-2"></div>
+                            <div class="ham-span" id="ham-3"></div>
+
+                        </div>
+                        <div class="mobile-nav-menues">
+                            <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src ="/static/images/adddog.svg"/></a>
+                            <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src="/static/images/dogprofile.svg"/></a>
+                            <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon-two" src="/static/images/twodogs.svg"/></a>
+                            <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src="/static/images/profile.svg"/></a>
+                            <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src="/static/images/explore.svg"/></a>
+                            <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="mobile-navbar-icon"><img class="svg-icon" src="/static/images/inbox.svg"/></a>
+                        </div>
                     </div>
                 </div>
-                
+                <script src="{{url_for('static', filename='scripts/hamburger.js')}}"></script>
             </div>
+            
+            
+
             <div id="main-div">
 
                 {% block content %}{% endblock %}
             </div>
         </div>
-        
+        <div id="sidenavbar">
+            <a href="/add-puppy" id="{{ 'sidebar-active-elem' if active_page == 'add' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">Add Puppy</p></a>
+                <a href="/profile" id="{{ 'sidebar-active-elem' if active_page == 'profile' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">Profile</p></a>
+                <a href="/explore" id="{{ 'sidebar-active-elem' if active_page == 'explore' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">Explore</p></a>
+                <a href="/best-match" id="{{ 'sidebar-active-elem' if active_page == 'bestMatch' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">Best match</p></a>
+                <a href="/requests" id="{{ 'sidebar-active-elem' if active_page == 'requests' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">My dogs</p></a>
+                <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">Inbox</p></a>
+        </div>
     </body>
 </html>

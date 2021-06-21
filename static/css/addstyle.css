@@ -207,10 +207,38 @@ table{
     }
     .input-form{
         width: 90%;
-        height: ;
+        height: 40px;
+        font-size: 15px;
+    }
+    
+    #image-upload-wrap{
+        position: static;
+    }
+    #upload-btn{
+        position: static;
+    }
+
+    #separator-wrap{
+        display: none;
+    }
+
+    .rating-box{
+        width: 20px;
+        height: 20px;
+    }
+
+    .traits-wrapper{
         
     }
 
+    .trait-name{
+        color: var(--light);
+        font-family: var(--font);
+        font-size: 15px;
+        margin-right: 10px;
+    }
+
+    
 }
 
 @media screen and (max-width: 700px){

@@ -37,7 +37,6 @@ function handlePasswordValue(){
         alert.style.display = 'none'
     }
 
-    console.log(firstPass.value, seconPass.value);
 
     if(firstPass.value !== "" && seconPass.value !== ""){
         if(firstPass.value === seconPass.value){
