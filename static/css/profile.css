@@ -87,3 +87,32 @@
     object-fit: cover;
     border-radius: 50%;
 }
+
+@media screen and (max-width: 1300px){
+    
+}
+
+@media screen and (max-width: 1000px){
+    #avatar{
+        position: static;
+    }
+    #image-btn{
+        position: static;
+    }
+
+}
+
+@media screen and (max-width: 700px){
+    #avatar{
+        width: 250px;
+        height: 250px;
+    }
+
+}
+
+@media screen and (max-width: 300px){
+    #avatar{
+        width: 150px;
+        height: 150px;
+    }
+}

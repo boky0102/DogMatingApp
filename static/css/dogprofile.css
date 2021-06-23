@@ -73,7 +73,7 @@
 
 .p-dog-card{
     font-family: var(--font);
-    color: var(--dark);
+    color: var(--light);
 }
 
 #dog-area{
@@ -94,7 +94,7 @@
     flex-direction: column;
     align-items: center;
     border: 2px solid var(--light);
-    height: 1300px;
+    height: 1500px;
 
 }
 
@@ -236,4 +236,154 @@
 
 #close-icon:hover{
     cursor: pointer;
+}
+
+
+@media screen and (max-width: 1300px){
+    #user-card{
+        width: 25%;
+    }
+    .rating-box-range{
+        width: 25px;
+        height: 25px;
+    }
+
+    .rating-box-not-range{
+        width: 25px;
+        height: 25px;
+    }
+
+    .p-dog-card{
+        font-size: 15px;
+    }
+    #mating-req-btn{
+        width: 60%;
+        margin-left: 10px;
+        
+    }
+
+    #dog-select select{
+        width: 60%;
+    }
+
+    #dog-select label{
+        margin-left: 15px;
+    }
+
+
+}
+
+@media screen and (max-width: 1000px){
+    #dog-profile-wrap{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #dog-area{
+        width: 90%;
+        
+        align-items: center;
+    }
+
+    #user-card{
+        width: 40%;
+    }
+    .rating-box-range{
+        width: 20px;
+        height: 20px;
+    }
+
+    .rating-box-not-range{
+        width: 20px;
+        height: 20px;
+    }
+
+    .p-dog-card{
+        font-size: 15px;
+    }
+
+    .trait-column{
+        margin-right: 20px;
+    }
+
+    .static-traits{
+        width: 100%;
+        align-self: center;
+        margin-left: 10px;
+    }
+    #mating-req-btn{
+        width: 60%;
+        margin-left: 10px;
+        
+    }
+
+    #dog-select select{
+        width: 60%;
+    }
+
+    #dog-select label{
+        margin-left: 15px;
+    }
+}
+
+@media screen and (max-width: 700px){
+    #user-card{
+        width: 65%;
+    }
+
+    .rating-box-range{
+        width: 15px;
+        height: 15px;
+    }
+
+    .rating-box-not-range{
+        width: 15px;
+        height: 15px;
+    }
+
+    .p-dog-card{
+        font-size: 13px;
+    }
+
+    .trait-column{
+        margin-right: 10px;
+    }
+
+    .static-traits{
+        width: 100%;
+        align-self: center;
+        margin-left: 10px;
+    }
+    #mating-form-wrap{
+        flex-direction: column;
+    }
+
+    #dog-picture{
+        height: 25%;
+    }
+
+    #dog-area{
+        height: 1050px;
+    }
+
+    #mating-req-btn{
+        width: 60%;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    #dog-select select{
+        width: 60%;
+    }
+
+    #dog-select label{
+        margin-left: 15px;
+    }
+}
+
+@media screen and (max-width: 300px){
+    #user-card{
+        width: 90%;
+    }
 }
