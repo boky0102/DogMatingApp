@@ -22,6 +22,7 @@ from random import randint
 
 app = Flask(__name__)
 
+
 # DB congig
 
 app.config['MYSQL_HOST'] = os.environ.get('mysql_host')
@@ -36,6 +37,8 @@ mysql = MySQL(app)
 app.secret_key = os.environ.get('SECRET_KEY')
 app.config['SESSION_TYPE'] = 'filesystem'
 # BCRYPT CONFIG
+
+
 
 
 bcrypt = Bcrypt(app)

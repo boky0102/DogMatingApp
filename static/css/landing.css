@@ -116,12 +116,16 @@ input[type="password"]{
 
 .input-text-password{
     position: absolute;
-    top:0%;
+    top:30%;
     left: 7%;
     font-size: 20px;
     font-family: var(--font);
     color: var(--light);
 
+}
+
+#register-form .input-text-password{
+    top: 0%;
 }
 
 .inpt:focus + .input-text-username,
@@ -237,23 +241,86 @@ h1,p,h2{
 }
 
 @media screen and (max-width: 700px){
+    #wrapper{
+        overflow-x: hidden;
+    }
+
     #left-part{
         font-size: 13px;
         height: 300px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .paw-image{
+        width: 80px;
+        height: 80px;
     }
     h1{
         font-size: 25px;
     }
 
     .inpt{
-        width: 100%;
+        width: 250px;
     }
 
     .head{
         margin-bottom: 35px;
     }
+
+    #background{
+        height: 150vh;
+    }
+    
+    
+    #buttons-wrapper button{
+       width: 90%;
+    }
+
+
 }
 
 @media screen and (max-width: 300px){
     
+    #left-part{
+        font-size: 10px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .paw-image{
+        width: 70px;
+        height: 70px;
+    }
+
+    h1{
+        font-size: 20px;
+    }
+
+    .inpt{
+        width: 200px;
+        
+    }
+
+    #login-form{
+        
+        margin: 0px;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+    }
+
+    #buttons-wrapper{
+        justify-content: space-evenly;
+
+        width: 100%;
+    }
+    
+    #buttons-wrapper button{
+        width: 35%;
+        height: 50px;
+        margin: 0;
+        font-size: 17px;
+    }
+
 }

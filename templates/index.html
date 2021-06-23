@@ -28,39 +28,41 @@
                     
                 </div>
                 <div id="divide"></div>
-                <div id="login-form">
-                        <form method="POST" action="/auth">
+                <form method="POST" action="/auth"></form>
+                    <div id="login-form">
                             
-                                <div id="form-header">
-                                    <h1 class="head">Login</h1>
-                                </div>
-                                <div class="input-box">
-                                    <input name="usernameLogin" type="text" class="inpt inptA" required/>
-                                    <p class="input-text-username">Username</p>
-                                </div>
-                    
-                                <div class="input-box">
-                                    <input name="passwordLogin" type="password" class="inpt inptB" required/>
-                                    <p class="input-text-password">Password</p>
-                    
-                                </div>
                                 
-                                <div id="buttons-wrapper">
-                                    <button class="btn" type="submit"> LOGIN</button>
-                                    <button class="btn" onclick="handleRegClick()"> REGISTER </button>
-                                </div>
-                                {% with messages = get_flashed_messages() %}
-                                {% if messages %}
-                                <div>
-                                    <p>
-                                    {{ messages[0] }}
-                                    </p>
-                                </div>
-                                {% endif %}
-                                {% endwith %}
+                                    <div id="form-header">
+                                        <h1 class="head">Login</h1>
+                                    </div>
+                                    <div class="input-box">
+                                        <input name="usernameLogin" type="text" class="inpt inptA" required/>
+                                        <p class="input-text-username">Username</p>
+                                    </div>
+                        
+                                    <div class="input-box">
+                                        <input name="passwordLogin" type="password" class="inpt inptB" required/>
+                                        <p class="input-text-password">Password</p>
+                        
+                                    </div>
+                                    
+                                    <div id="buttons-wrapper">
+                                        <button class="btn" type="submit"> LOGIN</button>
+                                        <button class="btn" onclick="handleRegClick()"> REGISTER </button>
+                                    </div>
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    <div>
+                                        <p>
+                                        {{ messages[0] }}
+                                        </p>
+                                    </div>
+                                    {% endif %}
+                                    {% endwith %}
+                                
                             
-                        </form>
-                </div>
+                    </div>
+                </form>
                 <div id="register-form">
                     <form method="POST">
                         
