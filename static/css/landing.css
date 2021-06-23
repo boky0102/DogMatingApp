@@ -218,3 +218,42 @@ h1,p,h2{
 #reg-btn:disabled{
     cursor: not-allowed;
 }
+
+
+@media screen and (max-width: 1300px){
+    #wrapper{
+        flex-direction: column;
+    }
+
+    #left-part{
+        border-right: none;
+        border-bottom: 1px solid var(--light);
+        margin-top: 40px;
+    }
+}
+
+@media screen and (max-width: 1000px){
+
+}
+
+@media screen and (max-width: 700px){
+    #left-part{
+        font-size: 13px;
+        height: 300px;
+    }
+    h1{
+        font-size: 25px;
+    }
+
+    .inpt{
+        width: 100%;
+    }
+
+    .head{
+        margin-bottom: 35px;
+    }
+}
+
+@media screen and (max-width: 300px){
+    
+}

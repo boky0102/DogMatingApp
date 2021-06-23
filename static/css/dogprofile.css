@@ -386,4 +386,18 @@
     #user-card{
         width: 90%;
     }
+
+    .rating-box-range{
+        width: 10px;
+        height: 10px;
+    }
+
+    .rating-box-not-range{
+        width: 10px;
+        height: 10px;
+    }
+
+    .p-dog-card{
+        font-size: 10px;
+    }
 }

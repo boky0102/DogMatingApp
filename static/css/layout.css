@@ -279,13 +279,13 @@ p{
 
 @media screen and (max-width: 300px){
     .svg-icon{
-        width: 25px;
-        height: 25px;
+        width: 18px;
+        height: 18px;
     }
 
     .svg-icon-two{
-        width: 35px;
-        height: 35px;
+        width: 25px;
+        height: 25px;
     }
 }
 
