@@ -223,8 +223,9 @@ table{
     }
 
     .rating-box{
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
     }
 
     .traits-wrapper{
@@ -234,7 +235,7 @@ table{
     .trait-name{
         color: var(--light);
         font-family: var(--font);
-        font-size: 15px;
+        font-size: 13px;
         margin-right: 10px;
     }
 
@@ -246,5 +247,37 @@ table{
 }
 
 @media screen and (max-width: 300px){
+    .trait-name{
+        font-size: 10px;
+    }
+    .rating-box{
+        width: 10px;
+        height: 10px;
+        border-radius: 15%;
+        margin-right: 5px;
+    }
+
+    #image-upload-wrap{
+        width: 200px;
+        height: 200px;
+    }
+
+    .input-form{
+        width: 70%;
+    }
+
+    .add-form-wrap{
+        align-items: center;
+    }
+
+    #add-puppy-submit-btn{
+        margin-left: 15px;
+        margin-bottom: 15px;
+    }
     
+    
+    #p-select-alert{
+        margin-left: 15px;
+    }
 }
+

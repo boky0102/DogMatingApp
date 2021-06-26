@@ -158,3 +158,69 @@
     padding: 10px;
     max-width: 60%;
 }
+
+.last-msg{
+    display: inline;
+}
+
+
+@media screen and (max-width: 1300px){
+    
+}
+
+@media screen and (max-width: 1000px){
+
+    #inbox-container{
+        margin: 15px 0px;
+    }
+
+    #conversation-header{
+        display: none;
+    }
+
+    #messanger-wrap{
+        flex-direction: column;
+    }
+
+    #conversations-wrap{
+        height: 100px;
+        overflow-y: unset;
+        overflow-x: visible;
+        border-bottom: 2px solid var(--light);
+        width: 100%;
+        background-color: var(--glass);
+    }
+
+    .conversation-card{
+        width: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: unset;
+    }
+
+    .con-img-wrap{
+        height: 60%;
+        width: auto;
+        margin: 0px;
+    }
+
+    .last-msg{
+        display: none;
+    }
+
+    .con-info-wrap{
+        display: none;
+    }
+
+
+
+}
+
+@media screen and (max-width: 700px){
+    
+}
+
+@media screen and (max-width: 300px){
+    
+}

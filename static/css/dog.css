@@ -82,3 +82,46 @@
 #request-nav-active-elem{
     background-color: var(--dark);
 }
+
+@media screen and (max-width: 1300px){
+    #dog-wrap{
+        flex-direction: column;
+        align-items: center;
+    }
+    #left-card{
+        width: 50%;
+        position: static;
+    }
+
+    #request-wrap{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1000px){
+    #dog-wrap{
+        flex-direction: column;
+        align-items: center;
+    }
+    #left-card{
+        width: 50%;
+        position: static;
+    }
+
+    #request-wrap{
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 700px){
+    #left-card{
+        width: 69%;
+    }
+}
+
+@media screen and (max-width: 300px){
+    #left-card{
+        width: 95%;
+    }
+}

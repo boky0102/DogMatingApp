@@ -347,7 +347,7 @@
     }
 
     .trait-column{
-        margin-right: 10px;
+        padding-right: 10px;
     }
 
     .static-traits{
@@ -387,17 +387,64 @@
         width: 90%;
     }
 
+    
     .rating-box-range{
-        width: 10px;
-        height: 10px;
+        width: 5px;
+        height: 5px;
+        margin-right: 4px;
     }
 
     .rating-box-not-range{
-        width: 10px;
-        height: 10px;
+        width: 5px;
+        height: 5px;
+        margin-right: 4px;
     }
 
+    
+
     .p-dog-card{
-        font-size: 10px;
+        font-size: 7px;
     }
+
+    .trait-column{
+        padding-right: 5px;
+    }
+
+    #mating-req-btn{
+        width: 100px;
+        height: 50px;
+        font-size: 13px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #dog-area{
+        height: 750px;
+    }
+    #dog-picture{
+        height: 30%;
+    }
+
+    .modal{
+        height: 50%;
+        width: 80%;
+    }
+
+    #modal-header label{
+        font-size: 12px;
+
+    }
+
+    .modal-textarea{
+        width: 90%;
+    }
+
+    .modal button{
+        width: 100px;
+        height: 50px;
+        
+    }
+
+
 }

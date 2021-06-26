@@ -262,6 +262,10 @@ p{
         position: relative;
 
     }
+
+    .notmobile{
+        display: inline;
+    }
     
 }
 
@@ -287,5 +291,25 @@ p{
         width: 25px;
         height: 25px;
     }
+
+    #hamburger{
+        height: 70%;
+        margin-left: 5px;
+    }
+
+    .ham-span{
+        height: 4px;
+        width: 30px;
+    }
+
+    .notmobile{
+        display: none;
+    }
+
+    .mobile-nav-menues{
+        
+    }
+    
+    
 }
 
