@@ -163,12 +163,31 @@
     display: inline;
 }
 
+.icon-send-button{
+    display: none;
+}
+
+
+@media screen and (max-width: 1650px){
+    #conversations-wrap{
+        width: 40%;
+    }
+
+    #current-conversation{
+        width: 60%;
+    }
+}
+
 
 @media screen and (max-width: 1300px){
     
 }
 
 @media screen and (max-width: 1000px){
+
+    #current-conversation{
+        width: 100%;
+    }
 
     #inbox-container{
         margin: 15px 0px;
@@ -184,11 +203,14 @@
 
     #conversations-wrap{
         height: 100px;
-        overflow-y: unset;
-        overflow-x: visible;
+        overflow-y: hidden;
+        overflow-x: scroll;
         border-bottom: 2px solid var(--light);
         width: 100%;
         background-color: var(--glass);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .conversation-card{
@@ -200,8 +222,8 @@
     }
 
     .con-img-wrap{
-        height: 60%;
-        width: auto;
+        height: 60px;
+        width: 60px;
         margin: 0px;
     }
 
@@ -218,9 +240,44 @@
 }
 
 @media screen and (max-width: 700px){
+    .icon-send-button{
+        display: block;
+        width: 60px;
+        height: 60px;
+        background-color: var(--primary);
+        border-style: none;
+        border-radius: 50%;
+        margin: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .icon-send-button:hover{
+        cursor: pointer;
+    }
+
     
+
+    #new-message-input{
+        width: 60%;    
+        font-size: 13px;
+    }
+
+
+    
+
+    #send-btn{
+        display: none;
+    }
+
+
 }
 
 @media screen and (max-width: 300px){
-    
+    .icon-send-button{
+        width: 40px;
+        height: 40px;
+    }
 }

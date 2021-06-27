@@ -37,6 +37,7 @@ p{
     height: 100vh;
     background-color: var(--primary);
     display: flex;
+    justify-content: space-evenly;
     flex-direction: column;
     text-decoration: none;
     box-shadow: 20px var(--light);
@@ -47,12 +48,15 @@ p{
 
 .avatar{
     align-self: center;
-    margin-top: 50px;
+    
     background-color: var(--light);
     height: 200px;
     width: 200px;
     border-radius: 50%;
     border: 2px solid var(--light);
+    position: relative;
+    
+    
 }
 
 .sidebar-elem{
@@ -82,24 +86,11 @@ p{
     background-color: var(--dark);
 }
 
-#logOut-btn{
-    background-color: var(--dark);
-    border-style: none;
-    border-radius: 15px;
-}
 
-#btn-div{
-    align-self: center;
-    margin-top: 20px;
-}
-#btn-div:hover{
-    scale: 1.1;
-    transition: ease-in-out 0.3s;
-    cursor: pointer;
-}
+
 
 #sidebar-items-wrapper{
-    margin-top: 20px;
+    
     padding: 10px;
 }
 
@@ -127,7 +118,80 @@ p{
     display: none;
 }
 
+.logo{
+    width: 100px;
+    height: 100px;
+}
+
+#logo-container{
+    
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo-container h1{
+    margin: 0;
+}
+
+
+#logout-icon{
+    width: 20px;
+    height: 20px;
+}
+
+#logOut-btn{
+    background-color: var(--dark);
+    border-style: none;
+    border-radius: 20px;
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    right: 75%;
+    bottom: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#avat-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 1400px) {
+    .sidebar-elem{
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .avatar{
+        height: 150px;
+        width: 150px;
+    }
+
+    
+}
+
+
 @media screen and (max-width: 1000px){
+
+    #avat-container{
+        display: none;
+    }
+
+    #logo-container{
+        display: none;
+    }
+
     #sidebar{
         width: 100%;
         height: 60px;
@@ -266,6 +330,8 @@ p{
     .notmobile{
         display: inline;
     }
+
+    
     
 }
 

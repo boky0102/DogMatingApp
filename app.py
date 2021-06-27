@@ -26,6 +26,9 @@ app = Flask(__name__)
 # DB congig
 
 
+
+# DB congig
+
 app.config['MYSQL_HOST'] = os.environ.get('mysql_host')
 app.config['MYSQL_PORT'] = int(os.environ.get('mysql_port'))
 app.config['MYSQL_USER'] = os.environ.get('mysql_user')
@@ -37,7 +40,6 @@ mysql = MySQL(app)
 
 app.secret_key = os.environ.get('SECRET_KEY')
 app.config['SESSION_TYPE'] = 'filesystem'
-# BCRYPT CONFIG
 
 
 bcrypt = Bcrypt(app)
@@ -124,7 +126,7 @@ def landing():
         result = cur.fetchall()
         cur.close()
         if len(result) == 0:
-            defaultAvatar = "/static/images/noavatar-dog.png"
+            defaultAvatar = "/static/images/uploads/avatar.svg"
             pw_hash = bcrypt.generate_password_hash(
                 password, 10).decode('utf-8')
             cur2 = mysql.connection.cursor()
@@ -162,7 +164,7 @@ def isAuth():
             session['username'] = result[0][0]
             session['avatSrc'] = result[0][3]
             flask_login.login_user(user)
-            return redirect("/home")
+            return redirect("/profile")
         else:
             flash('Wrong username or password')
             return redirect("/")
@@ -174,14 +176,14 @@ def isAuth():
 @app.route("/home", methods=['GET'])
 @flask_login.login_required
 def homeRoute():
-    return render_template("home.html", currentAvatar=session['avatSrc'])
+    return render_template("home.html", currentAvatar=session['avatSrc'], user=session['username'])
 
 
 @app.route("/add-puppy", methods=['GET', 'POST'])
 @flask_login.login_required
 def addPuppy():
     if request.method == 'GET':
-        return render_template('addpuppy.html', currentAvatar=session['avatSrc'], breedOptions=breeds)
+        return render_template('addpuppy.html', currentAvatar=session['avatSrc'], breedOptions=breeds, user=session['username'])
     if request.method == 'POST':
         puppyDetails = request.form
         puppyname = puppyDetails['name']
@@ -251,7 +253,7 @@ def addPuppy():
         )
         mysql.connection.commit()
         cur.close()
-        return redirect("/home")
+        return redirect("/requests")
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -270,9 +272,9 @@ def profile():
         cur.close()
 
         if result is None:
-            return render_template("profile.html", currentUsername=username, currentAvatar="", streetAndNum="", city="", country="")
+            return render_template("profile.html", currentUsername=username, currentAvatar=session['avatSrc'], streetAndNum="", city="", country="", user=session['username'])
         else:
-            return render_template("profile.html", currentUsername=username, currentAvatar=result[0], streetAndNum=result[1], city=result[2], country=result[3])
+            return render_template("profile.html", currentUsername=username, currentAvatar=result[0], streetAndNum=result[1], city=result[2], country=result[3], user=session['username'])
 
     if request.method == 'POST':
         userDetails = request.form
@@ -367,7 +369,7 @@ def explore():
         )
         result = cur.fetchall()
         cur.close()
-        return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result)
+        return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result, user=session['username'])
     if request.method == 'POST':
         filterOptions = request.form
         breed = filterOptions['breed']
@@ -379,7 +381,7 @@ def explore():
                 "SELECT * FROM dog WHERE UID != %s", (currentUserId,)
             )
             result = cur.fetchall()
-            return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result)
+            return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=result, user=session['username'])
 
         elif breed == "Any" and gender != "Any":
             cur.execute(
@@ -399,7 +401,7 @@ def explore():
                 )
             )
         results = cur.fetchall()
-        return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=results)
+        return render_template('explore.html', currentAvatar=session['avatSrc'], breedOptions=breeds, dogs=results, user=session['username'])
 
 
 @app.route('/dog/<dogid>', methods=['GET', 'POST'])
@@ -433,7 +435,7 @@ def getDog(dogid):
         )
         currentUserDogs = cur.fetchall()
         cur.close()
-        return render_template('dogprofile.html', currentAvatar=curAvatSrc, dog=result, dogImg=dogPicture, ownerImg=ownerPicture, traits=traitNames, curUserDogs=currentUserDogs)
+        return render_template('dogprofile.html', currentAvatar=curAvatSrc, dog=result, dogImg=dogPicture, ownerImg=ownerPicture, traits=traitNames, curUserDogs=currentUserDogs, user=session['username'])
 
     if request.method == 'POST':
 
@@ -493,7 +495,7 @@ def requests():
         result = cur.fetchall()
 
         cur.close()
-        return render_template('mydogs.html', currentAvatar=avatSrc, dogs=result)
+        return render_template('mydogs.html', currentAvatar=avatSrc, dogs=result, user=session['username'])
 
 
 @app.route('/mydog/<dogid>/requests', methods=['GET', 'POST'])
@@ -524,7 +526,7 @@ def myDogRequests(dogid):
             requests = cur.fetchall()
             traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
                           'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
-            return render_template('dogrequests.html', currentAvatar=avatSrc, dogData=result, dogImg=dogSrc, requestsData=requests, traits=traitNames)
+            return render_template('dogrequests.html', currentAvatar=avatSrc, dogData=result, dogImg=dogSrc, requestsData=requests, traits=traitNames, user=session['username'])
         else:
             return redirect("/home")
 
@@ -587,7 +589,7 @@ def scheduledRequest(dogid):
             traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
                           'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
             cur.close()
-            return render_template('scheduledrequest.html', currentAvatar=avatSrc, dogData=result, dogImg=dogSrc, requestsData=requests, traits=traitNames)
+            return render_template('scheduledrequest.html', currentAvatar=avatSrc, dogData=result, dogImg=dogSrc, requestsData=requests, traits=traitNames, user=session['username'])
         else:
             return redirect("/home")
 
@@ -651,7 +653,7 @@ def inbox():
         if result[0] != session['uid']:
             filteredlist.append(result)
     print(filteredlist)
-    return render_template('inbox.html', currentAvatar=session['avatSrc'], conversations=filteredlist)
+    return render_template('inbox.html', currentAvatar=session['avatSrc'], conversations=filteredlist, user=session['username'])
 
 
 @app.route('/message', methods=['POST'])
@@ -745,7 +747,7 @@ def conversation(conid):
         )
         result = cur.fetchall()
         cur.close()
-        return render_template('conversation.html', currentAvatar=session['avatSrc'], conversations=filteredlist, recieverAvatar=filteredlist[0][1])
+        return render_template('conversation.html', currentAvatar=session['avatSrc'], conversations=filteredlist, recieverAvatar=filteredlist[0][1], user=session['username'])
 
     if request.method == 'POST':
 
@@ -834,7 +836,7 @@ def bestMatch():
         mydogs = cur.fetchall()
         print(mydogs)
 
-        return render_template('bestmatch.html', currentAvatar=session['avatSrc'], ownerDogs=mydogs)
+        return render_template('bestmatch.html', currentAvatar=session['avatSrc'], ownerDogs=mydogs, user=session['username'])
 
     if request.method == 'POST':
         formData = request.form
@@ -886,7 +888,7 @@ def match(dogname):
         traitNames = ['PLAYFULL', 'CURIOUS', 'SOCIAL', 'AGGRESSIVE',
                       'DEMANDING', 'DOMINANT', 'PROTECTIVE', 'APARTMENT', 'VOCAL']
 
-        return render_template('bestmatch.html', currentAvatar=session['avatSrc'], currentDog=ownerdog, matches=doglist, traits=traitNames, ownerDogs=mydogs)
+        return render_template('bestmatch.html', currentAvatar=session['avatSrc'], currentDog=ownerdog, matches=doglist, traits=traitNames, ownerDogs=mydogs, user=session['username'])
 
     if request.method == 'POST':
         formData = request.form

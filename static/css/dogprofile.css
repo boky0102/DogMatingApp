@@ -382,7 +382,7 @@
     }
 }
 
-@media screen and (max-width: 300px){
+@media screen and (max-width: 350px){
     #user-card{
         width: 90%;
     }

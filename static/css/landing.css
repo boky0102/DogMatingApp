@@ -224,6 +224,8 @@ h1,p,h2{
 }
 
 
+
+
 @media screen and (max-width: 1300px){
     #wrapper{
         flex-direction: column;

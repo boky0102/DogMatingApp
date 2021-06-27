@@ -27,12 +27,17 @@
         
         <div id="layout-wrapper">
             <div id="sidebar">
-                <div class="avatar">
-                    <img class="img-avatar" src="{{ currentAvatar }}"/>
+                <div id="avat-container">
+                    <div class="avatar">
+                        <img class="img-avatar" src="{{ currentAvatar }}"/>
+                        <a href="/logout"><button id="logOut-btn"><img id="logout-icon" src="/static/images/exit.svg" /></button></a>
+        
+                    </div>
+                    <h2>Hi, {{ user }}</h2>
                 </div>
-                <div id="btn-div">
-                    <a href="/logout"><button id="logOut-btn"><p class="text-in-nav">Log out</p></button></a>
-                </div>
+                
+                
+
                 <div id="sidebar-items-wrapper">
                     <a href="/add-puppy" id="{{ 'sidebar-active-elem' if active_page == 'add' else '' }}" class="sidebar-elem"><p class="text-in-nav">Add Puppy</p></a>
                     <a href="/profile" id="{{ 'sidebar-active-elem' if active_page == 'profile' else '' }}" class="sidebar-elem"><p class="text-in-nav">Profile</p></a>
@@ -57,6 +62,11 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="logo-container">
+                    <img class="logo" src="/static/images/paw.svg"/>
+                    <h1>Puppy maker</h1>
+                </div>
                 <script src="{{url_for('static', filename='scripts/hamburger.js')}}"></script>
             </div>
             
@@ -74,6 +84,7 @@
                 <a href="/best-match" id="{{ 'sidebar-active-elem' if active_page == 'bestMatch' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">Best match</p></a>
                 <a href="/requests" id="{{ 'sidebar-active-elem' if active_page == 'requests' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">My dogs</p></a>
                 <a href="/inbox" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">Inbox</p></a>
+                <a href="/logout" id="{{ 'sidebar-active-elem' if active_page == 'inbox' else '' }}" class="sidebar-elem navelem"><p class="text-in-nav">Logout</p></a>
         </div>
     </body>
 </html>
