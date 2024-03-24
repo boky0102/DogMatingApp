@@ -36,6 +36,8 @@ app.config['MYSQL_PASSWORD'] = os.environ.get('mysql_password')
 app.config['MYSQL_DB'] = os.environ.get('mysql_db')
 mysql = MySQL(app)
 
+
+
 # APP SECRET KEY CONFIG
 
 app.secret_key = os.environ.get('SECRET_KEY')
@@ -119,6 +121,7 @@ def landing():
         userDetails = request.form
         username = userDetails['username']
         password = userDetails['password']
+        print(userDetails)
 
         cur = mysql.connection.cursor()
         cur.execute(
